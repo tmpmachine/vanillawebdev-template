@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateUrl='indie.xml' b:templateVersion='1.3.3' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<b:with var='isDev' value='data:blog.homepageUrl.raw contains "https://dev-"'>
+<b:with var="assets" value='{
+  prod: {
+    baseUrl: "https://blogger-file-host-bd193.web.app/simple-blog/v2",
+    cachePrefix: "?uid=NDA0NjE2NDE",
+  },
+  dev: {
+    baseUrl: "/simple-blog-template/assets"
+  }
+}'>
+<head>
+  <b:include name='@modules/blog-shortcut'/>
+  <b:include name='@modules/stop-page-tracking'/>
+  
+  <meta name="theme-color" content="#3f5173" id="browser-nav-theme-color"/>
+  
+  <b:if cond="data:view.isSingleItem">
+    <meta property="og:type" content="article" />
+    <meta property="article:publisher" content="https://pacolemon.blogspot.com" />
+  <b:else/>
+    <meta property="og:type" content="website"/>
+  </b:if>
+  
+  <b:if cond='data:view.isSingleItem or data:view.isHomepage'>
+    <title><b:eval expr='data:blog.pageName ? (data:blog.pageName + " - " + data:blog.title.escaped) : data:blog.title.escaped'/></title>
+    <meta property="og:title" expr:content='data:blog.pageName ? (data:blog.pageName + " - " + data:blog.title) : data:blog.title'/>
+    <b:if cond='data:view.isHomepage'>
+      <meta property="og:description" expr:content="data:view.description"/>
+      <meta name="description" expr:content="data:view.description"/>
+    </b:if>
+    <meta property="og:url" expr:content="data:view.url"/>
+    <meta property="og:site_name" expr:content="data:blog.title"/>
+    
+  <b:elseif cond='data:view.isSearch'/>
+    <b:if cond='data:view.search.label'>
+      <b:include name='searchLabelPage.title-and-meta'/>
+    <b:elseif cond='data:view.search.query'/>
+      <title><b:eval expr='"Search result : " + data:view.search.query.escaped'/></title>
+    <b:else/>
+      <title><data:messages.olderPosts/></title>
+    </b:if>
+
+  <b:elseif cond='data:view.isArchive'/>
+    <title><data:messages.blogArchive/> : <data:blog.pageName/></title>
+  
+  <b:else/>
+    <title>404 : Page not found - <data:blog.title/></title>
+    <meta property="og:title" expr:content='"404 : Page not found - " + data:blog.title'/>
+    <meta property="og:description" content="The page that you are looking had been moved, deleted, or never existed"/>
+    <meta name="description" content="The page that you are looking had been moved, deleted, or never existed"/>
+    
+  </b:if>
+
+  <!-- # skin -->
+  <!--nodivless-->
+  <file src="skin.html"></file>
+  <!--/nodivless-->
+  
+  <!-- # styles -->
+  <b:include name='@css' data='{ path: "normalize.min.css" }'/>
+  <b:include name='@css' data='{ path: "style.css" }'/>
+  <b:include name='@css' data='{ path: "widgets.css" }'/>
+  <b:include name='@css' data='{ path: "skin.css" }'/>
+  
+  <meta name='viewport' content='width=device-width'/>
+  <meta charset='UTF-8'/>
+  <b:if cond='data:view.isArchive'>
+    <meta content='noindex, noarchive' name='robots'/>
+  </b:if>
+  <!--<link rel="icon" type="image/x-icon" href='http://pacolemon.blogspot.com/favicon.ico'/>-->
+  <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/-wZuNZFcvb5M/YNH95kxxb8I/AAAAAAAAPmM/NUJMTXKtf-Y_6vSKpuoH7OOEWWkQdrxNgCLcBGAsYHQ/s16/final.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="https://lh3.googleusercontent.com/-wZuNZFcvb5M/YNH95kxxb8I/AAAAAAAAPmM/NUJMTXKtf-Y_6vSKpuoH7OOEWWkQdrxNgCLcBGAsYHQ/s16/final.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://lh3.googleusercontent.com/-wZuNZFcvb5M/YNH95kxxb8I/AAAAAAAAPmM/NUJMTXKtf-Y_6vSKpuoH7OOEWWkQdrxNgCLcBGAsYHQ/s32/final.png" />
+  
+  
+  <b:with var="defaultImageUrl" value='"https://1.bp.blogspot.com/-AXVkCvKLmog/XQbnJI8j4cI/AAAAAAAAIhY/QaxerT9ctGkeXn1fc4qq7cQwLBHl8vSnwCPcBGAYYCw/s320/MicrosoftTeams-image%2B%25283%2529.png"'>
+    <b:if cond="data:blog.postImageUrl">
+      <meta expr:content='resizeImage(data:blog.postImageUrl, 246, "1:1")' property='og:image'/>
+    <b:elseif cond='data:defaultImageUrl != "-"'/>
+      <meta expr:content='resizeImage(data:defaultImageUrl, 246, "1:1")' property='og:image'/>
+    </b:if>
+  </b:with>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300&amp;display=swap" rel="stylesheet"/>
+  
+  <b:if cond='data:view.isPreview'>
+    <style>
+      .blogger-clickTrap{display:none}
+    </style>
+  </b:if>
+  
+</head>
+<!-- # body -->
+<body class="skin-body-default" expr:data-js-assets-path='(data:isDev ? data:assets.dev.baseUrl : data:assets.prod.baseUrl) + "/js"'>
+  
+  <!-- # scripts -->
+  <b:include async="true" name="@js" data='{ path: "index.js", isModule: "module" }'/>
+  
+  <b:if cond="data:view.isLayoutMode">
+    
+    <!-- # layout -->
+    [ {d:flex}
+      [ {w:25%}
+        <b:include name='section:HiddenWidgets'/>
+      ]
+      [ {w:55%}
+        [ {d:flex}
+          [ {w:40%}
+            <b:include name='section:Top'/>
+            <b:include name='section:Header'/>
+            <b:include name='section:Nav'/>
+          ]
+          [ {w:60%}
+            <b:include name="section:Main"/>
+            <b:include name='section:FooterLinks'/>
+          ]
+        ]
+      ]
+      [ {w:20%}
+        <b:include name="section:BlogModules"/>
+        <b:include name="section:BlogConfig"/>
+      ]
+    ]
+    
+  <b:else/>
+  
+    <script><file src="js/wait.js"></file></script>
+    <b:include name="section:BlogConfig"/>
+
+    [ .MTIwNTIyMjA .h-100 .ov-auto
+      
+      <!-- # layout -->
+      [ .layout_NDYzMDMzNzE .d-flex .flex-col .align-items-center
+        <!-- l:top -->
+        [ .top .flex-1 .container-x-1rem 
+          <!-- # Top section -->
+          [ .SectionTop
+            [ .void .void-2x]
+            [ .layout-section-flex-col-gap-2x
+              <b:include name="section:Top"/>
+              [ .void .void-2x]
+              <b:include name="section:Header" cond="!(data:view.isSingleItem)"/>
+            ]
+          ]
+          [ .void .void-1x]
+          
+          <!-- # Nav section -->
+          [
+            <b:include name="section:Nav"/>
+          ]
+        
+          <!-- # modules -->
+          <b:include name="section:BlogModules"/>
+          
+          <!-- # Main section -->
+          [
+            [ .void .void-2x]
+            <b:include name="section:Main"/>
+            [ .void .void-2x]
+          ]
+        ]
+        <!-- l:bottom -->
+        [ .w-100
+          [ .void .void-2x]
+          [ .void .void-2x]
+          [ .void .void-2x]
+          [ .SectionFooterLinks .d-flex .flex-col .align-items-center
+            [ .void .void-2x]
+            [ .void .void-1x]
+            <b:include name='section:FooterLinks'/>
+            [ .void .void-2x]
+            [ .void .void-1x]
+          ]
+        ]
+      ]
+    
+    ]
+    
+  </b:if>
+  
+      
+  
+  <!-- # markups -->
+  <file src="markups.html"></file>
+  <file src="widgets/Header.html"></file>
+  <file src="widgets/HTML.html"></file>
+  <file src="widgets/Label.html"></file>
+  <file src="widgets/Blog.html"></file>
+  <file src="widgets/PageList.html"></file>
+  <file src="widgets/BlogSearch.html"></file>
+  <file src="widgets/LinkList.html"></file>
+
+  <!-- # templates -->
+  <template id="tmp-search-hint">
+    [ .search-hints
+      [a ._searchHints ._title href="#"]
+    ]
+  </template>
+  
+  <!-- # PWA -->
+  <b:if cond="data:isDev">
+    <b:tag name="script" src="/pwa-cacher.js"/>
+    <script>
+    /*! <![CDATA[ */
+        if (typeof(navigator) !== 'undefined' && 'serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js').catch(function(e) {
+            console.error(e);
+          });
+        }
+    /*! ]]> */
+    </script>
+  </b:if>
+  
+</body>
+</b:with>
+</b:with>
+</html>

@@ -1,0 +1,105 @@
+  <b:defaultmarkups><b:defaultmarkup type="Common">
+    <b:includable id="section:Top"><b:section id="Search"></b:section></b:includable>
+    <b:includable id="section:Header"><b:section id="Header"></b:section></b:includable>
+    <b:includable id="section:Nav"><b:section id="Nav"></b:section></b:includable>
+    <b:includable id="section:BlogModules"><b:section id="BlogModules"></b:section></b:includable>
+    <b:includable id="section:BlogConfig"><b:section id="BlogConfig"></b:section></b:includable>
+    <b:includable id="section:FooterLinks"><b:section id="FooterLinks"></b:section></b:includable>
+    <b:includable id="section:Main">
+      <b:section id="Main" >
+        <b:widget id="Blog501" locked="false" title="Blog Posts" type="Blog" version="2" visible="true"></b:widget>
+      </b:section>
+    </b:includable>
+    <b:includable id="section:HiddenWidgets"><b:section id="HiddenWidgets"></b:section></b:includable>
+  </b:defaultmarkup></b:defaultmarkups>
+
+<b:defaultmarkups>
+  <b:defaultmarkup type='Common'>
+    
+    <!-- ASSETS (JS, CSS) includables -->
+    <b:includable id="@css" var="opt">
+      <b:with var="scope" value='{
+        baseUrl: (data:isDev ? data:assets.dev.baseUrl : data:assets.prod.baseUrl),
+        path: (data:opt ? "/css/" + data:opt.path : ""),
+        cacheUID: (data:isDev ? "" : data:assets.prod.cachePrefix),
+      }'>
+        <b:tag name="link" rel="stylesheet" expr:href="data:scope.baseUrl + data:scope.path + data:scope.cacheUID"/>
+      </b:with>
+    </b:includable>
+    <b:includable id="@js" var="opt">
+      <b:with var="scope" value='{
+        baseUrl: (data:isDev ? data:assets.dev.baseUrl : data:assets.prod.baseUrl),
+        path: (data:opt ? "/js/" + data:opt.path : ""),
+        cacheUID: (data:isDev ? "" : data:assets.prod.cachePrefix),
+      }'>
+        <b:tag name="script" expr:src="data:scope.baseUrl + data:scope.path + data:scope.cacheUID">
+          <b:attr name='type' value='module' cond='data:opt AND data:opt.isModule'/>
+          <b:attr name='async' value='async' cond='data:opt AND data:opt.isAsync'/>
+        </b:tag>
+      </b:with>
+    </b:includable>
+    
+    <b:includable id='@modules/stop-page-tracking'>
+      <!-- @modules/stop-page-tracking -->
+      <script>
+        function noTrackViews() {
+          var date = new Date();
+          date.setTime(date.getTime() + (90 * 24 * 60 * 60 * 1000));
+          var expires = "; expires=" + date.toGMTString();
+          document.cookie = "_ns=2" + expires + "; path=/";
+        }
+        // renew automatically on last visit
+        if (document.cookie.includes('_ns=2')) {
+            noTrackViews();
+        }
+      </script>
+
+      <b:if cond='
+              ( data:view.url.raw == (data:blog.homepageUrl.raw + "/notrack") ) OR
+              ( data:view.url.raw contains ("notrack" + "?m=1") )
+      '>
+        <script>
+          noTrackViews();
+          alert('Your views will no longer be tracked.')
+        </script>
+      </b:if>
+    </b:includable>
+
+    <b:includable id='@modules/blog-shortcut'>
+      <!-- @modules/blog-shortcut -->
+      <!--nodivless-->
+      <b:with var='links' value='[
+        {
+          path: "/admin",
+          target: ("https://blogger.com/blog/posts/" + data:blog.blogId),
+        }, {
+          path: "/stats",
+          target: ("https://blogger.com/blog/stats/week/" + data:blog.blogId),
+        }, {
+          path: "/layout",
+          target: ("https://blogger.com/blog/layout/" + data:blog.blogId),
+        }, {
+          path: "/xml",
+          target: ("https://blogger.com/blog/themes/edit/" + data:blog.blogId),
+        }, {
+          path: "/settings",
+          target: ("https://blogger.com/blog/settings/" + data:blog.blogId),
+        },
+      ]'>
+        
+        <b:loop var='link' values='data:links'>
+          <b:if cond='
+                ( data:view.url.raw == (data:blog.homepageUrl.raw + data:link.path) ) OR
+                ( data:view.url.raw contains (data:link.path + "?m=1") AND data:blog.isMobileRequest )
+          '>
+            <a expr:href='data:link.target' id='th-link'/>
+            <script> document.querySelector('#th-link').click(); </script>
+          </b:if>
+        </b:loop>
+        
+      </b:with>
+      <!--/nodivless-->
+    </b:includable>
+
+  </b:defaultmarkup>
+</b:defaultmarkups>

@@ -1,0 +1,42 @@
+<b:defaultmarkups><b:defaultmarkup type="Header">
+
+  <!-- main -->
+  <b:includable id="main" var="this">
+    <b:include cond='data:imagePlacement in {"REPLACE", "BEFORE_DESCRIPTION"}' name='image'/>
+  </b:includable>
+  <!---->
+  <b:includable id="title">
+    [h1
+      <data:title/>
+    ]
+  </b:includable>
+  <!---->
+  <b:includable id="description">
+    [p
+      <data:this.description/>
+    ]
+  </b:includable>
+  <!---->
+  <!---->
+  <b:includable id="image">
+    [ .wgHeaderLogo .d-flex .justify-content-center .gap-half .flex-wrap
+      [a expr:href="data:blog.homepageUrl" .d-inline-flex .MTIyNTg4MjQ
+        [ .d-flex .gap-half .flex-wrap .justify-content-center
+          <b:include data="{
+            image: data:image,
+            altText: data:blog.title.escaped,
+            originalWidth: data:width,
+            originalHeight: data:height
+          }" name="responsiveImage"/>
+          <b:if cond='data:imagePlacement == "BEFORE_DESCRIPTION"'>
+            [ .d-flex .flex-col .justify-content-center
+              <b:include name="title"/>
+              <b:include name="description"/>
+            ]
+          </b:if>
+        ]
+      ]
+    ]
+  </b:includable>
+    
+</b:defaultmarkup></b:defaultmarkups>

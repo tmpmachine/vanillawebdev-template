@@ -1,0 +1,21 @@
+*{box-sizing:border-box}
+
+.d-flex { display: flex; }
+.justify-content-center{justify-content:center}.justify-content-between{justify-content:space-between}
+.text-center{text-align:center}
+.gap-full{gap:1rem}
+
+body {
+    background: #1f1f1f;
+    color: #f6f6f6;
+}
+a {
+    color: #5dd775;
+}
+
+.void{display:flex}
+.void-tenth{margin-bottom:0.1rem}.void-quarter{padding-bottom:0.25rem}.void-half{padding-bottom:0.5rem}.void-full,.void-1x{padding-bottom:1rem}.void-2x{padding-bottom:2rem}.void-4x{padding-bottom:4rem}
+.obsoletes{display:none!important;height:0!important;width:0!important;overflow:hidden!important;visibility:hidden!important;position:absolute!important}
+
+/* blog admin item control */
+.item-control{display:none}

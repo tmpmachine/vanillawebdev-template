@@ -1,0 +1,6 @@
+{
+  "replaceDivless": true,
+  "minifyJs": true,
+  "minifyCss": true,
+  "transformCss": true
+}

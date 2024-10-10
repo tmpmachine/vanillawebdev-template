@@ -1,0 +1,11 @@
+{
+  "files": [
+    "/1.0/css/layout.css",
+    "/1.0/css/widgets.css",
+    "/1.0/css/style.css",
+    "/1.0/css/normalize.min.css"
+  ],
+  "local": [
+      "/pwa-cacher.js"
+  ]
+}

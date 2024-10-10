@@ -1,0 +1,43 @@
+<b:defaultmarkups><b:defaultmarkup type="LinkList">
+
+  <!-- main -->
+  <b:includable id="main" var="this">  
+    <b:include name="topNavLinks" cond='data:widget.sectionId == "Nav"'/>
+    <b:include name="footerNavLinks" cond='data:widget.sectionId == "FooterLinks"'/>
+  </b:includable>
+    
+  <b:includable id="topNavLinks">
+    <!-- top nav -->
+    [ .wg-LinkList
+      [ .void .void-1x]
+      [ .NDQwOTUyMg
+        <ul class="d-flex gap-full">
+          <b:loop values="data:links" var="link">
+            <li>
+                <a expr:href="data:link.target">
+                  <data:link.name/>
+                </a>
+            </li>
+          </b:loop>
+        </ul>
+      ]
+      [ .void .void-1x]
+    ]
+  </b:includable> 
+  
+  <b:includable id="footerNavLinks">
+    <!-- footer nav -->
+    <div class="wg-LinkList">
+      <ul class="d-flex flex-column gap-full align-items-center">
+        <b:loop values="data:links" var="link">
+          <li>
+              <a expr:href="data:link.target">
+                <data:link.name/>
+              </a>
+          </li>
+        </b:loop>
+      </ul>
+    </div>
+  </b:includable> 
+  
+</b:defaultmarkup></b:defaultmarkups>

@@ -1,0 +1,20 @@
+<b:defaultmarkups><b:defaultmarkup type="Label">
+
+    <b:includable id="main" var="this">  
+      
+      [ .wg-Label
+        <b:loop values='data:labels' var='label'>
+          <span class='label-size'>
+            <a class='label-name' expr:href='data:label.url'>
+              [s .NjMzMjI5MQ
+                <data:label.name/>
+              ]
+              <span class='label-count'><data:label.count/></span>
+            </a>
+          </span>
+        </b:loop>
+      ]
+
+    </b:includable>
+    
+</b:defaultmarkup></b:defaultmarkups>
