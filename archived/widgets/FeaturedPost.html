@@ -1,0 +1,16 @@
+<b:defaultmarkups>
+  
+  <!-- @Blog -->
+  <b:defaultmarkup type="FeaturedPost">
+    <b:includable id="main" var="this">
+      
+      <b:loop values="data:posts" var="post">
+        [ .post-body
+          <data:post.body/>
+        ]
+      </b:loop>
+    
+    </b:includable>
+  </b:defaultmarkup>
+  
+</b:defaultmarkups>

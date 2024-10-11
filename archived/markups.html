@@ -1,0 +1,91 @@
+<b:defaultmarkups>
+  <b:defaultmarkup type="Common">
+    
+    <!-- ASSETS (JS, CSS) includables -->
+    <b:includable id="@css" var="opt">
+      <b:with var="scope" value='{
+        baseUrl: (data:isDev ? data:assets.dev.baseUrl : data:assets.prod.baseUrl),
+        path: (data:opt ? "/css/" + data:opt.path : ""),
+        cacheUID: (data:isDev ? "" : data:assets.prod.cachePrefix),
+      }'>
+        <b:tag name="link" rel="stylesheet" expr:href="data:scope.baseUrl + data:scope.path + data:scope.cacheUID"/>
+      </b:with>
+    </b:includable>
+    <b:includable id="@js" var="opt">
+      <b:with var="scope" value='{
+        baseUrl: (data:isDev ? data:assets.dev.baseUrl : data:assets.prod.baseUrl),
+        path: (data:opt ? "/js/" + data:opt.path : ""),
+        cacheUID: (data:isDev ? "" : data:assets.prod.cachePrefix),
+      }'>
+        <b:tag name="script" expr:src="data:scope.baseUrl + data:scope.path + data:scope.cacheUID"/>
+      </b:with>
+    </b:includable>
+    
+    <!-- @modules/codeblock@v2.3 -->
+    <b:includable id="@modules/codeblock@v2.3">
+      <file src="modules/codeblock@v2.3/index.html"></file>
+    </b:includable>
+    
+    <!-- @modules/live-html@v1 -->
+    <b:includable id="@modules/live-html@v1">
+      <file src="modules/live-html@v1/index.html"></file>
+    </b:includable>
+    
+    <b:includable id='@modules/stop-page-tracking'>
+      <!-- @modules/stop-page-tracking -->
+      <script>
+        function noTrackViews() {
+          var date = new Date();
+          date.setTime(date.getTime() + (180 * 24 * 60 * 60 * 1000));
+          var expires = "; expires=" + date.toGMTString();
+          document.cookie = "_ns=2" + expires + "; path=/";
+        }
+        // renew automatically on last visit
+        if (document.cookie.includes('_ns=2')) {
+            noTrackViews();
+        }
+      </script>
+      <b:if cond='
+              ( data:view.url.raw == (data:blog.homepageUrl.raw + "/notrack") ) OR
+              ( data:view.url.raw contains ("notrack" + "?m=1") AND data:blog.isMobile )
+      '>
+        <script>
+          noTrackViews();
+          alert('Your views will no longer be tracked.')
+        </script>
+      </b:if>
+    </b:includable>
+
+    <b:includable id='@modules/blog-shortcut'>
+      <!--nodivless-->
+      <b:with var='links' value='[{
+          path: "/admin",
+          target: ("https://blogger.com/blog/posts/" + data:blog.blogId),
+        }, {
+          path: "/stats",
+          target: ("https://blogger.com/blog/stats/week/" + data:blog.blogId),
+        }, {
+          path: "/layout",
+          target: ("https://blogger.com/blog/layout/" + data:blog.blogId),
+        }, {
+          path: "/xml",
+          target: ("https://blogger.com/blog/themes/edit/" + data:blog.blogId),
+        }]'>
+      <!--/nodivless-->
+        
+        <b:loop var='link' values='data:links'>
+          <b:if cond='data:view.url.raw == (data:blog.homepageUrl.raw + data:link.path)'>
+            <a expr:href='data:link.target' id='th-link'/>
+            <script> document.querySelector('#th-link').click(); </script>
+          <b:elseif cond='data:blog.isMobile AND data:view.url.raw contains ("/" + data:link.path + "?m=1")'/>
+            <a expr:href='data:link.target' id='th-link'/>
+            <script> document.querySelector('#th-link').click(); </script>
+          </b:if>
+        </b:loop>
+        
+      </b:with>
+    </b:includable>
+
+      
+  </b:defaultmarkup>
+</b:defaultmarkups>

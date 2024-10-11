@@ -1,0 +1,1974 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<!-- scope-id counter: 0 --><html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateUrl='indie.xml' b:templateVersion='1.3.3' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<b:with value='data:blog.homepageUrl.raw contains &quot;https://dev-&quot;' var='isDev'>
+<b:with value='{   isProd: !data:isDev,   cssHostUrl: &quot;https://vanillawebdev-filehost.web.app/css/v1/&quot;,   jsHostUrl: &quot;https://vanillawebdev-filehost.web.app/js/v1/&quot;, }' var='global'>
+<head>
+  
+  <!-- custom blogger shortcut -->
+  <b:include name='@modules/blog-shortcut'/>
+  <b:if cond='data:view.url.raw + &quot;!!&quot; contains &quot;/notrack!!&quot;'>
+    <!-- no track script -->
+    <b:include name='@modules/stop-page-tracking'/>
+  </b:if>
+  
+  <!-- $blogTitle # SEO meta (title, desc, url, site) -->
+  <b:if cond='data:view.isArchive'>
+    <title><data:messages.blogArchive/> : <data:blog.pageName/></title>
+  <b:elseif cond='data:view.isSingleItem'/>
+    <title><b:eval expr='data:blog.pageName ? (data:blog.pageName + &quot; - &quot; + data:blog.title.escaped) : data:blog.title.escaped'/></title>
+  
+    <meta expr:content='data:blog.pageName ? (data:blog.pageName + &quot; - &quot; + data:blog.title) : data:blog.title' property='og:title'/>
+    <meta expr:content='data:view.url' property='og:url'/>
+    <meta expr:content='data:blog.title' property='og:site_name'/>
+    
+    <b:if cond='data:view.isHomepage'>
+      <meta expr:content='data:view.description' property='og:description'/>
+      <meta expr:content='data:view.description' name='description'/>
+    </b:if>
+  <b:else/>
+    <title><data:blog.title/></title>
+  </b:if>
+  <!-- $blogTitle -->
+  
+  <!-- SEO meta : post thumbnail-->
+  <b:if cond='data:blog.postImageUrl'>
+    <meta expr:content='resizeImage(data:blog.postImageUrl, 246, &quot;1:1&quot;)' property='og:image'/>
+  </b:if>
+  
+  <meta content='website' property='og:type'/>
+  <b:if cond='data:view.isArchive'>
+    <meta content='noindex, noarchive' name='robots'/>
+  </b:if>
+  
+  <!-- other meta -->
+  <meta content='width=device-width' name='viewport'/>
+  <meta charset='UTF-8'/>
+   
+  <!-- blog skin -->
+  <!--nodivless-->
+  <b:skin version='1.3.3'><![CDATA[
+    
+    /*!  *//* !!! */
+    <!-- Variable definitions -->
+<Variable name="keycolor" description="Main Color" type="color" default="#8abc0d" value="#729c0b"/>
+<Variable name="startSide" description="Start side in blog language" type="automatic" default="left" hideEditor="true" />
+<Variable name="endSide" description="End side in blog language" type="automatic" default="right" hideEditor="true" />
+
+<Variable name="generalFont" description="General fallback font" type="font" default="400 16px Ubuntu, sans-serif" hideEditor="true" value="400 16px Ubuntu, sans-serif"/>
+<Variable name="generalFontLato" description="General fallback font, Lato" type="font" default="400 16px Lato, sans-serif" hideEditor="true" value="400 16px Lato, sans-serif"/>
+<Variable name="blogTitleFont" description="Main blog title font" type="font" default="500 62px Ubuntu, sans-serif" hideEditor="true" value="500 62px Ubuntu, sans-serif"/>
+<Variable name="blogTitleFontLato" description="Main blog title font, Lato" type="font" default="700 62px Lato, sans-serif" hideEditor="true" value="700 62px Lato, sans-serif"/>
+<Variable name="blogTitleFontMerriweather" description="Main blog title font, Merriweather" type="font" default="700 62px Merriweather, Georgia, serif" hideEditor="true" value="700 62px Merriweather, Georgia, serif"/>
+<Variable name="blogCollapsedTitleFont" description="Collapsed blog title font" type="font" default="500 36px Ubuntu, sans-serif" hideEditor="true" value="500 36px Ubuntu, sans-serif"/>
+<Variable name="blogCollapsedTitleFontLato" description="Collapsed blog title font, Lato" type="font" default="700 36px Lato, sans-serif" hideEditor="true" value="700 36px Lato, sans-serif"/>
+<Variable name="blogCollapsedTitleFontMerriweather" description="Collapsed blog title font, Merriweather" type="font" default="700 36px Merriweather, Georgia, serif" hideEditor="true" value="700 36px Merriweather, Georgia, serif"/>
+<Variable name="blogDescriptionFont" description="Main blog description font" type="font" default="italic 300 14px Merriweather, Georgia, serif" hideEditor="true" value="italic 300 14px Merriweather, Georgia, serif"/>
+<Variable name="headerItemFont" description="Header item font" type="font" default="700 12px Ubuntu, sans-serif" hideEditor="true" value="700 12px Ubuntu, sans-serif"/>
+<Variable name="headerItemFontLato" description="Header item font, Lato" type="font" default="700 12px Lato, sans-serif" hideEditor="true" value="700 12px Lato, sans-serif"/>
+<Variable name="textButtonFont" description="Text button font" type="font" default="500 12px Ubuntu, sans-serif" hideEditor="true" value="500 12px Ubuntu, sans-serif"/>
+<Variable name="textButtonFontLato" description="Text button font, Lato" type="font" default="500 12px Lato, sans-serif" hideEditor="true" value="500 12px Lato, sans-serif"/>
+<Variable name="searchFont" description="Search font" type="font" default="400 16px Merriweather, Georgia, serif" hideEditor="true" value="400 16px Merriweather, Georgia, serif"/>
+<Variable name="searchPlaceholderFont" description="Search placeholder" type="font" default="italic 400 15px Merriweather, Georgia, serif" hideEditor="true" value="italic 400 15px Merriweather, Georgia, serif"/>
+<Variable name="sidebarTitleFont" description="Sidebar title font" type="font" default="500 16px Ubuntu, sans-serif" hideEditor="true" value="500 16px Ubuntu, sans-serif"/>
+<Variable name="sidebarTitleFontLato" description="Sidebar title font, Lato" type="font" default="500 16px Lato, sans-serif" hideEditor="true" value="500 16px Lato, sans-serif"/>
+<Variable name="sidebarTitleFontMerriweather" description="Sidebar title font, Merriweather" type="font" default="700 16px Merriweather, Georgia, sans-serif" hideEditor="true" value="700 16px Merriweather, Georgia, sans-serif"/>
+<Variable name="sidebarLinkFont" description="Sidebar link font" type="font" default="400 14px Merriweather, Georgia, serif" hideEditor="true" value="400 14px Merriweather, Georgia, serif"/>
+<Variable name="sidebarPostTitleFont" description="Sidebar post title font" type="font" default="500 14px Ubuntu, sans-serif" hideEditor="true" value="500 14px Ubuntu, sans-serif"/>
+<Variable name="sidebarPostTitleFontLato" description="Sidebar post title font, Lato" type="font" default="500 14px Lato, sans-serif" hideEditor="true" value="500 14px Lato, sans-serif"/>
+<Variable name="sidebarPostFont" description="Sidebar post font" type="font" default="italic 400 14px Merriweather, Georgia, serif" hideEditor="true" value="italic 400 14px Merriweather, Georgia, serif"/>
+<Variable name="titleFont" description="Title font" type="font" default="500 24px Ubuntu, sans-serif" hideEditor="true" value="500 24px Ubuntu, sans-serif"/>
+<Variable name="titleFontLato" description="Title font, Lato" type="font" default="900 24px Lato, sans-serif" hideEditor="true" value="900 24px Lato, sans-serif"/>
+<Variable name="titleFontMerriweather" description="Title font, Merriweather" type="font" default="900 24px Merriweather, Georgia, serif" hideEditor="true" value="900 24px Merriweather, Georgia, serif"/>
+<Variable name="bylineFont" description="Byline font" type="font" default="italic 400 12px Merriweather, Georgia, serif" hideEditor="true" value="italic 400 12px Merriweather, Georgia, serif"/>
+<Variable name="postFilterFont" description="Filter font" type="font" default="italic 400 18px Merriweather, Georgia, serif" hideEditor="true" value="italic 400 18px Merriweather, Georgia, serif"/>
+<Variable name="labelsFont" description="Labels font" type="font" default="500 10.5px Ubuntu, sans-serif" hideEditor="true" value="500 10.5px Ubuntu, sans-serif"/>
+<Variable name="labelsFontLato" description="Labels font, Lato" type="font" default="500 10px Lato, sans-serif" hideEditor="true" value="500 10px Lato, sans-serif"/>
+<Variable name="sharingFont" description="Sharing font" type="font" default="400 14px Ubuntu, sans-serif" hideEditor="true" value="400 14px Ubuntu, sans-serif"/>
+<Variable name="sharingFontLato" description="Sharing font, Lato" type="font" default="400 14px Lato, sans-serif" hideEditor="true" value="400 14px Lato, sans-serif"/>
+<Variable name="bodyFont" description="Post body font" type="font" default="400 16px Merriweather, Georgia, serif" hideEditor="true" value="400 16px Merriweather, Georgia, serif"/>
+<Variable name="bodyLineHeight" description="Line height of body text" type="length" default="32px" hideEditor="true" value="32px"/>
+<Variable name="bodyFontSmall" description="Post body font (small)" type="font" default="400 14px Merriweather, Georgia, serif" hideEditor="true" value="400 14px Merriweather, Georgia, serif"/>
+<Variable name="bodyLineHeightSmall" description="Line height of body text (small)" type="length" default="24px" hideEditor="true" value="24px"/>
+
+<Variable name="white" description="White" type="color" default="#fff" hideEditor="true" value="#ffffff"/>
+<Variable name="black50" description="Black 50" type="color" default="#fafafa" hideEditor="true" value="#fafafa"/>
+<Variable name="lightGray" description="Light gray" type="color" default="#f7f7f7" hideEditor="true" value="#f7f7f7"/>
+<Variable name="lightishGray" description="Lightish gray" type="color" default="#efefef" hideEditor="true" value="#efefef"/>
+<Variable name="black600" description="Black 600" type="color" default="#757575" hideEditor="true" value="#757575"/>
+<Variable name="darkishGray" description="Darkish gray" type="color" default="#535353" hideEditor="true" value="#535353"/>
+<Variable name="black800" description="Black 800 " type="color" default="#424242" hideEditor="true" value="#424242"/>
+<Variable name="black900" description="Black 900" type="color" default="#212121" hideEditor="true" value="#212121"/>
+<Variable name="offBlack" description="Off black" type="color" default="#1f1f1f" hideEditor="true" value="#1f1f1f"/>
+<Variable name="black" description="Black" type="color" default="#000" hideEditor="true" value="#000000"/>
+
+<Variable name="vegeGreen" description="Vege green keycolor" type="color" default="#729c0b" hideEditor="true" value="#729c0b"/>
+<Variable name="lime" description="Lime keycolor" type="color" default="#f4ff81" hideEditor="true" value="#f4ff81"/>
+<Variable name="blueGray" description="Blue-gray color" type="color" default="#607d8b" hideEditor="true" value="#607d8b"/>
+<Variable name="blueGrayDark" description="Blue-gray color (darkened)" type="color" default="#263238" hideEditor="true" value="#263238"/>
+<Variable name="beige" description="Beige-blue background color" type="color" default="#eed7c2" hideEditor="true" value="#eed7c2"/>
+<Variable name="beigeDark" description="Beige-blue accent color" type="color" default="#da7d5e" hideEditor="true" value="#da7d5e"/>
+<Variable name="beigeBlue" description="Beige-blue keycolor" type="color" default="#374561" hideEditor="true" value="#374561"/>
+<Variable name="aqua" description="Aqua keycolor" type="color" default="#18ffff" hideEditor="true" value="#18ffff"/>
+<Variable name="peach" description="Peach background" type="color" default="#f59b82" hideEditor="true" value="#f59b82"/>
+<Variable name="peachBright" description="Peach keycolor" type="color" default="#ee582e" hideEditor="true" value="#ee582e"/>
+<Variable name="peachDark" description="Peach background (darkened)" type="color" default="#e8937b" hideEditor="true" value="#e8937b"/>
+
+<Variable name="transpDark03" description="Transparent background (3%)" type="color" default="rgba(0, 0, 0, 0.03)" hideEditor="true" value="rgba(0, 0, 0, 0.03)"/>
+<Variable name="transpDark10" description="Transparent background (10%)" type="color" default="rgba(0, 0, 0, 0.1)" hideEditor="true" value="rgba(0, 0, 0, 0.1)"/>
+<Variable name="transpDark30" description="Transparent background (30%)" type="color" default="rgba(0, 0, 0, 0.3)" hideEditor="true" value="rgba(0, 0, 0, 0.3)"/>
+<Variable name="transpLight" description="Transparent background (light)" type="color" default="rgba(255, 255, 255, 0.3)" hideEditor="true" value="rgba(255, 255, 255, 0.3)"/>
+<Variable name="transpBlack" description="Transparent background (black)" type="color" default="rgba(0, 0, 0, 0.87)" hideEditor="true" value="rgba(0, 0, 0, 0.87)"/>
+
+<Group description="Body">
+  <Variable name="body.background.color" description="Body background color" type="color" default="#f7f7f7"  value="#f7f7f7"/>
+  <Variable name="body.background" description="Background" type="background" color="#f7f7f7" default="$(color) none repeat scroll top left"  value="$(color) none repeat scroll top left"/>
+  <Variable name="body.text.font" description="Font" type="font" default="$(generalFont)"  value="400 16px Ubuntu, sans-serif"/>
+  <Variable name="body.text.color" description="Color" type="color" default="#000000"  value="#000000"/>
+  <Variable name="body.link.color" description="Link color" type="color" default="$(keycolor)"  value="#729c0b"/>
+  <Variable name="body.link.visited.color" description="Visited Link Color" type="color" default="$(body.link.color)"  value="#729c0b"/>
+  <Variable name="body.link.hover.color" description="Link Hover Color" type="color" default="$(body.link.color)"  value="#729c0b"/>
+  <Variable name="body.button.font" description="Button font" type="font" default="$(textButtonFont)"  value="500 12px Ubuntu, sans-serif"/>
+  <Variable name="body.button.color" description="Button color" type="color" default="$(keycolor)"  value="#729c0b"/>
+</Group>
+
+<Group description="Blog title" selector="div.widget.Header">
+  <Variable name="blog.title.font" description="Title Font" type="font" default="$(blogTitleFont)"  value="500 62px Ubuntu, sans-serif"/>
+  <Variable name="blog.collapsed.title.font" description="Collapsed title font" type="font" default="$(blogCollapsedTitleFont)"  value="500 36px Ubuntu, sans-serif"/>
+  <Variable name="blog.collapsed.title.color" description="Collapsed title color" type="color" default="$(blog.title.color)"  value="#1f1f1f"/>
+  <Variable name="blog.title.color" description="Title color" type="color" default="#1f1f1f"  value="#1f1f1f"/>
+  <Variable name="header.background.color" description="Header bar color" type="color" default="#efefef"  value="#efefef"/>
+  <Variable name="header.icons.color" description="Header icons color" type="color" default="$(keycolor)"  value="#729c0b"/>
+  <Variable name="header.separator.color" description="Header separator color" type="color" default="rgba(0, 0, 0, 0.3)"  value="rgba(0, 0, 0, 0.3)"/>
+  <Variable name="blog.description.font" description="Description font" type="font" default="$(blogDescriptionFont)"  value="italic 300 14px Merriweather, Georgia, serif"/>
+  <Variable name="blog.description.color" description="Description Color" type="color" default="#1f1f1f"  value="#1f1f1f"/>
+</Group>
+
+<Group description="Tabs" selector="div.widget.PageList">
+  <Variable name="tabs.text.font" description="Font" type="font" default="$(headerItemFont)"  value="700 12px Ubuntu, sans-serif"/>
+  <Variable name="tabs.text.color" description="Text color" type="color" default="$(keycolor)"  value="#729c0b"/>
+  <Variable name="tabs.selected.color" description="Selected color" type="color" default="$(tabs.text.color)"  value="#729c0b"/>
+  <Variable name="tabs.background.color" description="Tabs background color" type="color" default="#fff"  value="#ffffff"/>
+</Group>
+
+<Group description="Posts" selector="div.widget.Blog">
+  <Variable name="posts.background.color" description="Post background color" type="color" default="#fff"  value="#ffffff"/>
+  <Variable name="posts.title.color" description="Post title color" type="color" default="#212121"  value="#212121"/>
+  <Variable name="posts.title.font" description="Post title font" type="font" default="$(titleFont)"  value="500 24px Ubuntu, sans-serif"/>
+  <Variable name="posts.byline.color" description="Post byline color" type="color" default="#757575"  value="#757575"/>
+  <Variable name="posts.byline.font" description="Post byline font" type="font" default="$(bylineFont)"  value="italic 400 12px Merriweather, Georgia, serif"/>
+  <Variable name="posts.text.font" description="Post text font" type="font" default="$(bodyFont)"  value="400 16px Merriweather, Georgia, serif"/>
+  <Variable name="posts.text.color" description="Post text color" type="color" default="$(body.text.color)"  value="#000000"/>
+  <Variable name="posts.text.lineHeight" description="Post text line height" min="10px" max="60px" type="length" default="$(bodyLineHeight)"  value="32px"/>
+  <Variable name="posts.snippet.text.font" description="Post snippet text font" type="font" default="$(bodyFontSmall)"  value="400 14px Merriweather, Georgia, serif"/>
+  <Variable name="posts.snippet.text.lineHeight" description="Post snippet text line height" min="10px" max="60px" type="length" default="$(bodyLineHeightSmall)"  value="24px"/>
+  <Variable name="posts.link.color" description="Post link color" type="color" default="$(body.link.color)"  value="#729c0b"/>
+  <Variable name="posts.icons.color" description="Post icons color" type="color" default="$(posts.link.color)"  value="#729c0b"/>
+  <Variable name="posts.border.radius" description="Post border radius" type="length" default="0px" min="0px" max="32px"  value="0px"/>
+  <Variable name="postFilter.background.color" description="Filter background color" type="color" default="$(keycolor)"  value="#729c0b"/>
+  <Variable name="postFilter.message.font" description="Filter text font" type="font" default="$(postFilterFont)"  value="italic 400 18px Merriweather, Georgia, serif"/>
+  <Variable name="postFilter.message.color" description="Filter text color" type="color" default="$(posts.background.color)"  value="#ffffff"/>
+  <Variable name="postFilter.message.link.color" description="Filter keyword color" type="color" default="$(postFilter.message.color)"  value="#ffffff"/>
+  <Variable name="labels.font" description="Label font size" type="font" default="$(labelsFont)"  value="500 10.5px Ubuntu, sans-serif"/>
+</Group>
+
+<Group description="Sharing" selector=".sharing">
+  <Variable name="sharing.background.color" description="Sharing background color" type="color" default="$(posts.background.color)"  value="#ffffff"/>
+  <Variable name="sharing.text.font" description="Sharing text font" type="font" default="$(sharingFont)"  value="400 14px Ubuntu, sans-serif"/>
+  <Variable name="sharing.text.color" description="Sharing text color" type="color" default="$(posts.text.color)"  value="#000000"/>
+  <Variable name="sharing.icons.color" description="Sharing icons color" type="color" default="$(posts.icons.color)"  value="#729c0b"/>
+</Group>
+
+<Group description="Blockquotes">
+  <Variable name="blockquote.color" description="Blockquote color" type="color" default="#424242"  value="#424242"/>
+  <Variable name="blockquote.font" description="Blockquote font" type="font" default="$(body.text.font)"  value="400 16px Ubuntu, sans-serif"/>
+</Group>
+
+<Group description="Pictures">
+  <Variable name="picture.caption.text.color" description="Caption text color" type="color" default="#424242"  value="#424242"/>
+  <Variable name="picture.caption.font" description="Caption font" type="font" default="$(body.text.font)"  value="400 16px Ubuntu, sans-serif"/>
+</Group>
+
+<Group description="Sidebar" selector="div.sidebar_feed">
+  <Variable name="sidebar.background.color" description="Background color" type="color" default="$(body.background.color)"  value="#f7f7f7"/>
+  <Variable name="sidebar.separator.color" description="Separator color" type="color" default="rgba(0, 0, 0, 0.12)"  value="rgba(0, 0, 0, 0.12)"/>
+  <Variable name="widget.title.font" description="Gadget title font" type="font" default="$(sidebarTitleFont)"  value="500 16px Ubuntu, sans-serif"/>
+  <Variable name="widget.title.color" description="Gadget title color" type="color" default="$(body.text.color)"  value="#000000"/>
+  <Variable name="sidebar.icons.color" description="Sidebar icons color" type="color" default="$(keycolor)"  value="#729c0b"/>
+  <Variable name="sidebar.link.font" description="Link font" type="font" default="$(sidebarLinkFont)"  value="400 14px Merriweather, Georgia, serif"/>
+  <Variable name="sidebar.link.color" description="Link color" type="color" default="$(keycolor)"  value="#729c0b"/>
+  <Variable name="sidebar.posts.title.font" description="Post title font" type="font" default="$(sidebarPostTitleFont)"  value="500 14px Ubuntu, sans-serif"/>
+  <Variable name="sidebar.posts.text.font" description="Post text font" type="font" default="$(sidebarPostFont)"  value="italic 400 14px Merriweather, Georgia, serif"/>
+  <Variable name="sidebar.posts.text.color" description="Post text color" type="color" default="#535353"  value="#535353"/>
+</Group>
+
+<Group description="Search bar" selector="div.search">
+  <Variable name="search.text.color" description="Text color" type="color" default="$(offBlack)"  value="#1f1f1f"/>
+  <Variable name="search.icon.color" description="Icon color" type="color" default="rgba(0, 0, 0, 0.38)"  value="rgba(0, 0, 0, 0.38)"/>
+  <Variable name="search.font" description="Text font" type="font" default="$(searchFont)"  value="400 16px Merriweather, Georgia, serif"/>
+  <Variable name="search.placeholder.font" description="Placeholder text font" type="font" default="$(searchPlaceholderFont)"  value="italic 400 15px Merriweather, Georgia, serif"/>
+  <Variable name="search.placeholder.color" description="Placeholder text color" type="color" default="rgba(0, 0, 0, 0.38)"  value="rgba(0, 0, 0, 0.38)"/>
+  <Variable name="search.background.color" description="Background color" type="color" default="rgba(0, 0, 0, 0.03)"  value="rgba(0, 0, 0, 0.03)"/>
+</Group>
+
+<Group description="Attribution" selector=".widget.Attribution">
+  <Variable name="attribution.text.color" description="Attribution text color" type="color" default="$(body.text.color)"  value="#000000"/>
+  <Variable name="attribution.link.color" description="Attribution link color" type="color" default="$(body.link.color)"  value="#729c0b"/>
+  <Variable name="attribution.icon.color" description="Attribution icon color" type="color" default="#757575" hideEditor="true"  value="#757575"/>
+</Group>
+
+<Group description="Widths">
+  <Variable name="sidebar.width" description="Sidebar width" type="length" min="100px" max="1000px" default="280px"  value="280px"/>
+  <Variable name="posts.width.stream" description="Post width (stream)" type="length" min="100px" max="1000px" default="385px"  value="385px"/>
+</Group>
+    /*!  *//* !!! */
+  ]]></b:skin>
+  <!--/nodivless-->
+  
+  <!-- stylesheet -->
+  <b:include data='{ path: &quot;normalize.min.css&quot; }' name='@css'/>
+  <b:include data='{ path: &quot;style.css&quot; }' name='@css'/>
+  <b:include data='{ path: &quot;widgets.css&quot; }' name='@css'/>
+  
+  <b:if cond='data:view.isPreview'>
+    <!-- disable preview interaction lock -->
+    <style> .blogger-clickTrap { display:none } </style>
+  </b:if>
+
+</head>
+<body class='skin-body'>
+  
+  
+  <div class='wg-centered-layout'>
+    
+    <div class='void void-2x'/>
+  
+    <!-- # top nav -->
+    <div>
+      <b:section id='TopNav'>
+        <b:widget id='HTML2' locked='false' title='' type='HTML' visible='true'>
+          <b:widget-settings>
+            <b:widget-setting name='content'><![CDATA[<style>
+/* defaults */
+.skin-body {
+    line-height: 1.5;
+}
+
+.wg-Categories {
+    & {
+        
+    }
+    .list-item {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1.5rem;
+    }
+    .item a {
+        font-size: 1.1em;
+    }
+    .item a:not(:hover) {
+        text-decoration: none;
+    }
+}
+</style>]]></b:widget-setting>
+          </b:widget-settings>
+          <b:includable id='main'>
+  <b:include name='widget-title'/>
+  <div class='widget-content'>
+    <data:content/>
+  </div>
+</b:includable>
+        </b:widget>
+        <b:widget id='BlogSearch1' locked='true' title='Search This Blog' type='BlogSearch' visible='true'>
+          <b:includable id='main' var='this'>
+      <div class='widget-content wg-SearchBar' role='search'>
+        <b:include name='searchForm'/>
+      </div>
+    </b:includable>
+          <b:includable id='content'>
+  <div class='widget-content' role='search'>
+    <b:include name='searchForm'/>
+  </div>
+</b:includable>
+          <b:includable id='searchForm'>
+      <form expr:action='data:blog.searchUrl'>
+        <b:attr cond='not data:view.isPreview' name='target' value='_top'/>
+        <b:include name='urlParamsAsFormInput'/>
+        <div class='search-input'>
+          <input autocomplete='off' expr:aria-label='data:messages.searchThisBlog' expr:placeholder='data:messages.searchThisBlog' expr:value='data:view.isSearch ? data:view.search.query.escaped : &quot;&quot;' name='q'/>
+        </div>
+        <b:include name='searchSubmit'/>
+      </form>
+    </b:includable>
+          <b:includable id='searchSubmit'>
+      <input class='search-action' expr:value='data:messages.search.escaped' type='submit'/>
+    </b:includable>
+        </b:widget>
+      </b:section>
+      <div class='void void-2x'/>
+    </div>
+    
+    <!-- # header -->
+    <div>
+      <b:section class='SectionHeader' id='Header'>
+        <b:widget id='LinkList3' locked='false' title='' type='LinkList' visible='true'>
+          <b:widget-settings>
+            <b:widget-setting name='sorting'>NONE</b:widget-setting>
+            <b:widget-setting name='text-0'>Home</b:widget-setting>
+            <b:widget-setting name='link-0'>/</b:widget-setting>
+          </b:widget-settings>
+          <b:includable id='main'>
+  <b:include name='widget-title'/>
+  <b:include name='content'/>
+</b:includable>
+          <b:includable id='content'>
+ <div class='widget-content'>
+   <ul>
+     <b:loop values='data:links' var='link'>
+       <li><a expr:href='data:link.target'><data:link.name/></a></li>
+     </b:loop>
+   </ul>
+ </div>
+</b:includable>
+        </b:widget>
+      </b:section>
+      <div class='void void-1x'/>
+      <div class='void void-2x'/>
+    </div>
+    
+    <!-- # pinned post -->
+    <b:if cond='data:view.isLayoutMode OR ( data:view.isHomepage )'>
+      <b:section class='SectionPinnetPosts' id='PinnedPosts'>
+        <b:widget id='HTML1' locked='false' title='Categories' type='HTML' visible='true'>
+          <b:widget-settings>
+            <b:widget-setting name='content'><![CDATA[<!-- # general -->
+<div class="wg-Categories">
+  <h3 class="title">General & Development Overview</h3>
+  <div class="list-item">
+    <div class="item">
+      <h4>
+        TL;DR
+      </h4>
+      <p>
+        This blog's plain JS web app development guide, summarized.
+      </p>
+    </div>
+    <div class="item">
+      <h4>
+        <a href="https://vanillawebdev.blogspot.com/2024/06/plain-javascript-web-app-project.html">
+          Project Structure
+        </a>
+      </h4>
+      <p>
+        Well structured code for plain Javascript project (no modules).
+      </p>
+    </div>
+    <div class="item">
+      <h4>
+        Project Tutorials
+      </h4>
+      <p>
+        A list of project tutorials.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- # javascript -->
+<hr />
+<div class="wg-Categories">
+  <h3 class="title">Plain, Old Fashioned JavaScript</h3>
+  <div class="list-item">
+    <div class="item">
+      <h4>
+        <a href="https://vanillawebdev.blogspot.com/2024/06/building-app-components.html">
+          App Components
+        </a>
+      </h4>
+      <p>
+        Building component object for the app using factory function.
+      </p>
+    </div>
+    <div class="item">
+      <h4>
+        <a href="https://vanillawebdev.blogspot.com/2024/06/dom-event-handling.html">
+          DOM Event Handling
+        </a>  
+      </h4>
+      <p>
+        Centralized events map for DOM interaction.
+      </p>
+    </div>
+    <div class="item">
+      <h4>
+        <a href="https://vanillawebdev.blogspot.com/2024/06/managing-view-states.html">
+          Managing View States
+        </a>
+      </h4>
+      <p>
+        Utility to manage application view states.
+      </p>
+    </div>
+    <div class="item">
+      <h4>
+        <a href="https://vanillawebdev.blogspot.com/2024/06/loading-files.html">
+          Loading Files
+        </a>
+      </h4>
+      <p>
+        Utility for loading script files that also act as main entry point.
+      </p>
+    </div>
+    <div class="item">
+      <h4>
+        <a href="https://vanillawebdev.blogspot.com/2024/06/list-container-builder.html">
+          List Builder
+        </a>
+      </h4>
+      <p>
+        Utility for building list items.
+      </p>
+    </div>
+    <div class="item">
+      <h4>
+        <a href="https://vanillawebdev.blogspot.com/2024/06/interacting-with-list-items.html">
+          Interacting with List Items
+        </a>
+      </h4>
+      <p>
+        Handling list items events using event delegation.
+      </p>
+    </div>
+    <div class="item">
+      <h4>
+        <a href="https://vanillawebdev.blogspot.com/2024/06/module-scripts-exportimport.html">
+          PWA
+        </a>
+      </h4>
+      <p>
+        Adding offline first functionality to your web app.
+      </p>
+    </div>
+    <div class="item">
+      <h4>
+        <a href="https://vanillawebdev.blogspot.com/2024/06/module-scripts-exportimport.html">
+          Module Scripts (Export/Import)
+        </a>
+      </h4>
+      <p>
+        Migrating to modules scripting.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- # CSS -->
+<hr />
+<div class="wg-Categories">
+  <h3 class="title">CSS</h3>
+  <div class="list-item">
+    <div class="item">
+      <h4>
+        <a href="https://vanillawebdev.blogspot.com/2024/06/styling-elements-as-widgets.html">
+          Styling Widgets
+        </a>
+      </h4>
+      <p>
+        Styling guide for group of elements as "widgets".
+      </p>
+    </div>
+    <div class="item">
+      <h4>
+        <a href="https://vanillawebdev.blogspot.com/2024/06/utility-classes.html">
+          Utility Classes
+        </a>
+      </h4>
+      <p>
+        Few useful utility classes for building web app.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- # Misc  -->
+<hr />
+<div class="wg-Categories">
+  <h3 class="title">Misc.</h3>
+  <div class="list-item">
+    <div class="item">
+      <h4>
+        <a href="https://vanillawebdev.blogspot.com/2024/06/intro-to-divless-html.html">
+          Divless HTML
+        </a>
+      </h4>
+      <p>
+        A shortened version of HTML.
+      </p>
+    </div>
+    <div class="item">
+      <h4>
+        <a href="https://vanillawebdev.blogspot.com/2024/06/storing-reusable-codes.html">
+          Storing Reusable Codes
+        </a>
+      </h4>
+      <p>
+        The importance of storing reusable codes.
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<br />
+<br />]]></b:widget-setting>
+          </b:widget-settings>
+          <b:includable id='main'>
+  <b:include name='widget-title'/>
+  <div class='widget-content'>
+    <data:content/>
+  </div>
+</b:includable>
+        </b:widget>
+        <b:widget id='LinkList1' locked='false' title='Pinned Posts' type='LinkList' visible='true'>
+          <b:widget-settings>
+            <b:widget-setting name='shownum'>5</b:widget-setting>
+            <b:widget-setting name='sorting'>NONE</b:widget-setting>
+            <b:widget-setting name='text-0'>Fabric.js Exercise Project Tutorial</b:widget-setting>
+            <b:widget-setting name='link-0'>https://vanillawebdev.blogspot.com/2024/04/fabricjs-exercise-project-tutorial.html</b:widget-setting>
+          </b:widget-settings>
+          <b:includable id='main'>
+  <b:include name='widget-title'/>
+  <b:include name='content'/>
+</b:includable>
+          <b:includable id='content'>
+ <div class='widget-content'>
+   <ul>
+     <b:loop values='data:links' var='link'>
+       <li><a expr:href='data:link.target'><data:link.name/></a></li>
+     </b:loop>
+   </ul>
+ </div>
+</b:includable>
+        </b:widget>
+      </b:section>
+      <div class='void void-2x'/>
+      <div class='void void-2x'/>
+    </b:if>
+    
+    <!-- # main blog body -->
+    
+    <!-- # homepage: latest post heading -->
+    <b:if cond='data:view.isHomepage'>
+      <h1>Latest Posts</h1>
+    </b:if>
+    
+    <!-- # main blog footer -->
+    <b:section id='Main'>
+      <b:widget id='Blog1' locked='false' title='Blog Posts' type='Blog' visible='true'>
+        <b:widget-settings>
+          <b:widget-setting name='showDateHeader'>false</b:widget-setting>
+          <b:widget-setting name='style.textcolor'>#ffffff</b:widget-setting>
+          <b:widget-setting name='showShareButtons'>true</b:widget-setting>
+          <b:widget-setting name='showCommentLink'>true</b:widget-setting>
+          <b:widget-setting name='style.urlcolor'>#ffffff</b:widget-setting>
+          <b:widget-setting name='showAuthor'>false</b:widget-setting>
+          <b:widget-setting name='style.linkcolor'>#ffffff</b:widget-setting>
+          <b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
+          <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
+          <b:widget-setting name='timestampLabel'/>
+          <b:widget-setting name='reactionsLabel'/>
+          <b:widget-setting name='showAuthorProfile'>false</b:widget-setting>
+          <b:widget-setting name='style.layout'>1x1</b:widget-setting>
+          <b:widget-setting name='showLabels'>true</b:widget-setting>
+          <b:widget-setting name='showLocation'>true</b:widget-setting>
+          <b:widget-setting name='postLabelsLabel'/>
+          <b:widget-setting name='showTimestamp'>true</b:widget-setting>
+          <b:widget-setting name='postsPerAd'>1</b:widget-setting>
+          <b:widget-setting name='showBacklinks'>false</b:widget-setting>
+          <b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
+          <b:widget-setting name='showInlineAds'>false</b:widget-setting>
+          <b:widget-setting name='showReactions'>false</b:widget-setting>
+        </b:widget-settings>
+        <b:includable id='main' var='this'>
+      
+      <b:if cond='data:view.isSingleItem'>
+        <!-- single item -->
+        
+        <b:include name='@modules/codeblock@v2.3'/>
+        <b:include cond='data:view.url.raw contains &quot;/p/editorial.html&quot;' name='@modules/live-html@v1'/>
+        
+        <b:include name='singleItemView'/>
+        
+      <b:else/>
+        <!-- multiple item -->
+        <b:include name='multipleItemsView'/>
+      </b:if>
+      
+      
+    </b:includable>
+        <b:includable id='PostInfo'>
+      <div class='wg-PostInfo'>
+        
+        <!-- post details -->
+        <h1 class='heading'>Post Details</h1>
+        <ul>
+          <li>
+            <b>Published: </b> <data:post.date/>
+          </li>
+          <li>
+            <b>Last updated: </b> <data:post.lastUpdated/>
+          </li>
+        </ul>
+        <div class='void void-full'/>
+        
+        <b:if cond='data:post.labels'>
+          <h1 class='heading'>Tags</h1>
+          <!--labels chips-->
+          <b:if cond='data:post.labels'>
+            <div class='wg-LabelChips'>
+              <b:loop values='data:post.labels' var='label'>
+                <a class='item' expr:href='data:label.url'>
+                  <data:label.name/>
+                </a>
+              </b:loop>
+            </div>
+          </b:if>
+        </b:if>
+        
+      </div>
+    </b:includable>
+        <b:includable id='aboutPostAuthor'>
+  <div class='author-name'>
+    <a class='g-profile' expr:href='data:post.author.profileUrl' rel='author' title='author profile'>
+      <span>
+        <data:post.author.name/>
+      </span>
+    </a>
+  </div>
+  <div>
+    <span class='author-desc'>
+      <data:post.author.aboutMe/>
+    </span>
+  </div>
+</b:includable>
+        <b:includable id='addComments'>
+  <a expr:href='data:post.commentsUrl' expr:onclick='data:post.commentsUrlOnclick'>
+    <b:message name='messages.postAComment'/>
+  </a>
+</b:includable>
+        <b:includable id='commentAuthorAvatar'>
+  <div class='avatar-image-container'>
+    <img class='author-avatar' expr:src='data:comment.authorAvatarSrc' height='35' width='35'/>
+  </div>
+</b:includable>
+        <b:includable id='commentDeleteIcon' var='comment'>
+  <span expr:class='&quot;item-control &quot; + data:comment.adminClass'>
+    <b:if cond='data:showCmtPopup'>
+      <div class='goog-toggle-button'>
+        <div class='goog-inline-block comment-action-icon'/>
+      </div>
+    <b:else/>
+      <a class='comment-delete' expr:href='data:comment.deleteUrl' expr:title='data:messages.deleteComment'>
+        <img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
+      </a>
+    </b:if>
+  </span>
+</b:includable>
+        <b:includable id='commentForm' var='post'>
+  <div class='comment-form'>
+    <a name='comment-form'/>
+    <h4 id='comment-post-message'><data:messages.postAComment/></h4>
+    <b:if cond='data:this.messages.blogComment != &quot;&quot;'>
+      <p><data:this.messages.blogComment/></p>
+    </b:if>
+    <b:include data='post' name='commentFormIframeSrc'/>
+    <iframe allowtransparency='allowtransparency' class='blogger-iframe-colorize blogger-comment-from-post' expr:height='data:cmtIframeInitialHeight ?: &quot;90px&quot;' frameborder='0' id='comment-editor' name='comment-editor' src='' width='100%'/>
+    <data:post.cmtfpIframe/>
+    <script type='text/javascript'>
+      BLOG_CMT_createIframe(&#39;<data:post.appRpcRelayPath/>&#39;);
+    </script>
+  </div>
+</b:includable>
+        <b:includable id='commentFormIframeSrc' var='post'>
+  <a expr:href='data:post.commentFormIframeSrc' id='comment-editor-src'/>
+</b:includable>
+        <b:includable id='commentItem' var='comment'>
+  <div class='comment' expr:id='&quot;c&quot; + data:comment.id'>
+    <b:include cond='data:blog.enabledCommentProfileImages' name='commentAuthorAvatar'/>
+
+    <div class='comment-block'>
+      <div class='comment-author'>
+        <b:if cond='data:comment.authorUrl'>
+          <b:message name='messages.authorSaidWithLink'>
+            <b:param expr:value='data:comment.author' name='authorName'/>
+            <b:param expr:value='data:comment.authorUrl' name='authorUrl'/>
+          </b:message>
+        <b:else/>
+          <b:message name='messages.authorSaid'>
+            <b:param expr:value='data:comment.author' name='authorName'/>
+          </b:message>
+        </b:if>
+      </div>
+      <div expr:class='&quot;comment-body&quot; + (data:comment.isDeleted ? &quot; deleted&quot; : &quot;&quot;)'>
+        <data:comment.body/>
+      </div>
+      <div class='comment-footer'>
+        <span class='comment-timestamp'>
+          <a expr:href='data:comment.url' title='comment permalink'>
+            <data:comment.timestamp/>
+          </a>
+          <b:include data='comment' name='commentDeleteIcon'/>
+        </span>
+      </div>
+    </div>
+  </div>
+</b:includable>
+        <b:includable id='commentList' var='comments'>
+  <div id='comments-block'>
+    <b:loop values='data:comments' var='comment'>
+      <b:include data='comment' name='commentItem'/>
+    </b:loop>
+  </div>
+</b:includable>
+        <b:includable id='commentPicker' var='post'>
+  <b:if cond='data:post.showThreadedComments'>
+    <b:include data='post' name='threadedComments'/>
+  <b:else/>
+    <b:include data='post' name='comments'/>
+  </b:if>
+</b:includable>
+        <b:includable id='comments' var='post'>
+  <section expr:class='&quot;comments&quot; + (data:post.embedCommentForm ? &quot; embed&quot; : &quot;&quot;)' expr:data-num-comments='data:post.numberOfComments' id='comments'>
+    <a name='comments'/>
+    <b:if cond='data:post.allowComments'>
+
+      <b:include name='commentsTitle'/>
+
+      <div expr:id='data:widget.instanceId + &quot;_comments-block-wrapper&quot;'>
+        <b:include cond='data:post.comments' data='post.comments' name='commentList'/>
+      </div>
+
+      <b:if cond='data:post.commentPagingRequired'>
+        <div class='paging-control-container'>
+          <b:if cond='data:post.hasOlderLinks'>
+            <a expr:class='data:post.oldLinkClass' expr:href='data:post.oldestLinkUrl'>
+              <data:messages.oldest/>
+            </a>
+            <a expr:class='data:post.oldLinkClass' expr:href='data:post.olderLinkUrl'>
+              <data:messages.older/>
+            </a>
+          </b:if>
+
+          <span class='comment-range-text'>
+            <data:post.commentRangeText/>
+          </span>
+
+          <b:if cond='data:post.hasNewerLinks'>
+            <a expr:class='data:post.newLinkClass' expr:href='data:post.newerLinkUrl'>
+              <data:messages.newer/>
+            </a>
+            <a expr:class='data:post.newLinkClass' expr:href='data:post.newestLinkUrl'>
+              <data:messages.newest/>
+            </a>
+          </b:if>
+        </div>
+      </b:if>
+
+      <div class='footer'>
+        <b:if cond='data:post.embedCommentForm'>
+          <b:if cond='data:post.allowNewComments'>
+            <b:include data='post' name='commentForm'/>
+          <b:else/>
+            <data:post.noNewCommentsText/>
+          </b:if>
+        <b:else/>
+          <b:if cond='data:post.allowComments'>
+            <b:include data='post' name='addComments'/>
+          </b:if>
+        </b:if>
+      </div>
+    </b:if>
+    <b:if cond='data:showCmtPopup'>
+      <div id='comment-popup'>
+        <iframe allowtransparency='allowtransparency' frameborder='0' id='comment-actions' name='comment-actions' scrolling='no'>
+        </iframe>
+      </div>
+    </b:if>
+  </section>
+</b:includable>
+        <b:includable id='commentsTitle'>
+  <h3 class='title'><data:messages.comments/></h3>
+</b:includable>
+        <b:includable id='feedLinks'>
+  <b:if cond='!data:view.isPost'> <!-- Blog feed links -->
+    <b:if cond='data:feedLinks'>
+      <div class='blog-feeds'>
+        <b:include data='feedLinks' name='feedLinksBody'/>
+      </div>
+    </b:if>
+  <b:else/> <!--Post feed links -->
+    <div class='post-feeds'>
+      <b:loop values='data:posts' var='post'>
+        <b:if cond='data:post.allowComments and data:post.feedLinks'>
+          <b:include data='post.feedLinks' name='feedLinksBody'/>
+        </b:if>
+      </b:loop>
+    </div>
+  </b:if>
+</b:includable>
+        <b:includable id='feedLinksBody' var='links'>
+  <div class='feed-links'>
+  <data:messages.subscribeTo/>
+  <b:loop values='data:links' var='f'>
+     <a class='feed-link' expr:href='data:f.url' expr:type='data:f.mimeType' target='_blank'><data:f.name/> (<data:f.feedType/>)</a>
+  </b:loop>
+  </div>
+</b:includable>
+        <b:includable id='homePageLink'>
+  <a class='home-link' expr:href='data:blog.homepageUrl'>
+    <data:messages.home/>
+  </a>
+</b:includable>
+        <b:includable id='iframeComments' var='post'>
+  <!-- G+ comments, no longer available. The includable is retained for backwards-compatibility. -->
+</b:includable>
+        <b:includable id='inlineAd' var='post'>
+  <b:if cond='!data:view.isPreview'>
+    <b:if cond='data:this.adCode or data:this.adClientId or data:blog.adsenseClientId'>
+      <!-- Ad -->
+      <div class='inline-ad'>
+        <b:if cond='data:this.adCode != &quot;&quot;'>
+          <data:this.adCode/>
+        <b:else/>
+          <b:include cond='data:this.adClientId or data:blog.adsenseClientId' name='defaultAdUnit'/>
+        </b:if>
+      </div>
+    </b:if>
+  <b:else/>
+    <div class='inline-ad'>
+      <div class='inline-ad-placeholder'>
+        <span><b:message name='messages.adsGoHere'/></span>
+      </div>
+    </div>
+  </b:if>
+</b:includable>
+        <b:includable id='multipleItemsView' var='this'>
+      <div class='wg-HomePosts'>
+        <b:loop values='data:posts' var='post'>
+          <div class='post'>
+            <a class='post-link gap-full' expr:href='data:post.url'>
+              <div class='post-title'>
+                <data:post.title/>
+              </div>
+              <div class='post-date'>
+                <data:post.date/>
+              </div>
+            </a>
+          </div>
+        </b:loop>
+      </div>
+      <div class='void void-2x'/>
+      
+      <!-- # post navigation -->
+      <b:include name='post-navigation'/>
+      
+    </b:includable>
+        <b:includable id='nextPageLink'>
+  <a class='blog-pager-older-link' expr:href='data:olderPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-older-link&quot;' expr:title='data:messages.olderPosts'>
+    <data:messages.olderPosts/>
+  </a>
+</b:includable>
+        <b:includable id='post' var='post'>
+  <div class='post'>
+    <b:include data='post' name='postMeta'/>
+    <b:include data='post' name='postTitle'/>
+    <b:include name='headerByline'/>
+    <b:if cond='data:view.isSingleItem'>
+      <b:include data='post' name='postBody'/>
+    <b:else/>
+      <b:include data='post' name='postBodySnippet'/>
+      <b:include data='post' name='postJumpLink'/>
+    </b:if>
+    <b:include data='post' name='postFooter'/>
+  </div>
+</b:includable>
+        <b:includable id='post-navigation'>
+      <div>
+      
+        <div class='d-flex justify-content-between'>
+          <div>
+            <b:if cond='data:newerPageUrl'>  
+              <a expr:href='data:newerPageUrl'>Newer posts</a>
+            </b:if>
+          </div>
+          
+          <div>
+            <b:if cond='data:olderPageUrl'>
+              <a expr:href='data:olderPageUrl'>Older posts</a>
+            </b:if>
+          </div>
+        </div>
+        
+        <b:if cond='data:newerPageUrl OR data:olderPageUrl'>  
+          <div class='void void-2x'/>
+          <div class='text-center'>
+            <a expr:href='data:blog.homepageUrl'>Home</a>
+          </div>
+        </b:if>
+      
+      </div>
+    </b:includable>
+        <b:includable id='postBody' var='post'>
+  <!-- If metaDescription is empty, use the post body as the schema.org description too, for G+/FB snippeting. -->
+  <div class='post-body entry-content float-container' expr:id='&quot;post-body-&quot; + data:post.id'>
+    <data:post.body/>
+  </div>
+</b:includable>
+        <b:includable id='postBodySnippet' var='post'>
+  <b:include data='post' name='postBody'/>
+</b:includable>
+        <b:includable id='postCommentsAndAd' var='post'>
+  <article class='post-outer-container'>
+    <!-- Post title and body -->
+    <div class='post-outer'>
+      <b:include data='post' name='post'/>
+    </div>
+
+    <!-- Comments -->
+    <b:include cond='data:view.isSingleItem' data='post' name='commentPicker'/>
+
+    <!-- Show ad inside post container, after comments, if single item. -->
+    <b:include cond='data:view.isSingleItem and data:post.includeAd' data='post' name='inlineAd'/>
+  </article>
+
+  <!-- Show ad outside post container (between posts) for feed pages. -->
+  <b:include cond='data:view.isMultipleItems and data:post.includeAd' data='post' name='inlineAd'/>
+</b:includable>
+        <b:includable id='postCommentsLink'>
+  <b:if cond='data:view.isMultipleItems'>
+    <span class='byline post-comment-link container'>
+      <b:include cond='data:post.commentSource != 1' name='commentsLink'/>
+    </span>
+  </b:if>
+</b:includable>
+        <b:includable id='postFooter' var='post'>
+  <div class='post-footer'>
+    <b:include name='footerBylines'/>
+    <b:include data='post' name='postFooterAuthorProfile'/>
+  </div>
+</b:includable>
+        <b:includable id='postFooterAuthorProfile' var='post'>
+  <b:if cond='data:post.author.aboutMe and data:view.isPost'>
+    <div class='author-profile'>
+      <b:if cond='data:post.author.authorPhoto.url'>
+        <img class='author-image' expr:src='data:post.author.authorPhoto.url' width='50px'/>
+        <div class='author-about'>
+          <b:include data='post' name='aboutPostAuthor'/>
+        </div>
+      <b:else/>
+        <b:include data='post' name='aboutPostAuthor'/>
+      </b:if>
+    </div>
+  </b:if>
+</b:includable>
+        <b:includable id='postHeader' var='post'>
+  <b:include name='headerByline'/>
+</b:includable>
+        <b:includable id='postMeta' var='post'>
+  <b:include data='post' name='postMetadataJSON'/>
+</b:includable>
+        <b:includable id='postPagination'>
+  <div class='blog-pager container' id='blog-pager'>
+    <b:include cond='data:newerPageUrl' name='previousPageLink'/>
+    <b:include cond='data:olderPageUrl' name='nextPageLink'/>
+    <b:include cond='data:view.url != data:blog.homepageUrl' name='homePageLink'/>
+  </div>
+</b:includable>
+        <b:includable id='postTitle' var='post'>
+  <a expr:name='data:post.id'/>
+  <b:if cond='data:post.title != &quot;&quot;'>
+    <h3 class='post-title entry-title'>
+      <b:if cond='data:post.link or (data:post.url and data:view.url != data:post.url)'>
+        <a expr:href='data:post.link ?: data:post.url'><data:post.title/></a>
+      <b:else/>
+        <data:post.title/>
+      </b:if>
+    </h3>
+  </b:if>
+</b:includable>
+        <b:includable id='previousPageLink'>
+  <a class='blog-pager-newer-link' expr:href='data:newerPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-newer-link&quot;' expr:title='data:messages.newerPosts'>
+    <data:messages.newerPosts/>
+  </a>
+</b:includable>
+        <b:includable id='singleItemView' var='this'>
+      <b:loop values='data:posts' var='post'>
+        <!-- post body wrapper -->
+        <div class='wg-SinglePost'>
+          
+          <!-- # edit link -->
+          <div style='min-height:20px;'>
+            <div class='item-control blog-admin'>
+              <b:if cond='data:view.isPost'>
+                <a expr:href='&quot;https://www.blogger.com/blog/post/edit/&quot; + data:blog.blogId + &quot;/&quot; + data:post.id'>Edit this post</a>
+              <b:elseif cond='data:view.isPage'/>
+                <a expr:href='&quot;https://www.blogger.com/blog/page/edit/&quot; + data:blog.blogId + &quot;/&quot; + data:post.id'>Edit this post</a>
+              </b:if>
+            </div>
+          </div>
+          
+          <!-- # title -->
+          <h1 class='post-heading'>
+            <span class='post-title'>
+              <data:post.title/>
+            </span>
+          </h1>
+          <div class='void void-1x'/>
+          <div class='void void-2x'/>
+          
+          <!-- # body -->
+          <article class='post-body'>
+            <data:post.body/>
+          </article>
+        </div>
+        <div class='void void-4x'/>
+        <div class='void void-2x'/>
+
+        <!-- # post info -->
+        <div class='d-flex justify-content-center'>
+          <b:include name='PostInfo'/>
+        </div>
+        <div class='void void-4x'/>
+        
+        
+        <!-- # ads -->
+        <b:if cond='data:global.isProd'>
+          <div class='text-center'>
+            <div class='void void-2x'/>
+              
+              <script async='async' crossorigin='anonymous' src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1854718205178548'/>
+              <ins class='adsbygoogle' data-ad-client='ca-pub-1854718205178548' data-ad-format='auto' data-ad-slot='4679958295' data-full-width-responsive='true' style='display:block'/>
+              <script>
+                   (adsbygoogle = window.adsbygoogle || []).push({});
+              </script>
+              
+            <div class='void void-2x'/>
+          </div>
+        </b:if>
+        
+        
+        <!-- # post navigation -->
+        <b:include name='post-navigation'/>
+        <div class='void void-2x'/>
+        
+        <!-- # comment -->
+        <div class='wg-Cmt'>
+          <b:include data='post' name='commentPicker'/>
+        </div>
+        
+      </b:loop>
+    </b:includable>
+        <b:includable id='threadedCommentForm' var='post'>
+  <div class='comment-form'>
+    <a name='comment-form'/>
+    <h4 id='comment-post-message'><data:messages.postAComment/></h4>
+    <b:if cond='data:this.messages.blogComment != &quot;&quot;'>
+      <p><data:this.messages.blogComment/></p>
+    </b:if>
+    <b:include data='post' name='commentFormIframeSrc'/>
+    <iframe allowtransparency='allowtransparency' class='blogger-iframe-colorize blogger-comment-from-post' expr:height='data:cmtIframeInitialHeight ?: &quot;90px&quot;' frameborder='0' id='comment-editor' name='comment-editor' src='' width='100%'/>
+    <data:post.cmtfpIframe/>
+    <script type='text/javascript'>
+      BLOG_CMT_createIframe(&#39;<data:post.appRpcRelayPath/>&#39;);
+    </script>
+  </div>
+</b:includable>
+        <b:includable id='threadedCommentJs' var='post'>
+  <script async='async' expr:src='data:post.commentSrc' type='text/javascript'/>
+  <b:template-script inline='true' name='threaded_comments'/>
+  <script type='text/javascript'>
+    blogger.widgets.blog.initThreadedComments(
+        <data:post.commentJso/>,
+        <data:post.commentMsgs/>,
+        <data:post.commentConfig/>);
+  </script>
+</b:includable>
+        <b:includable id='threadedComments' var='post'>
+  <section class='comments threaded' expr:data-embed='data:post.embedCommentForm' expr:data-num-comments='data:post.numberOfComments' id='comments'>
+    <a name='comments'/>
+
+    <b:include name='commentsTitle'/>
+
+    <div class='comments-content'>
+      <b:if cond='data:post.embedCommentForm'>
+        <b:include data='post' name='threadedCommentJs'/>
+      </b:if>
+      <div id='comment-holder'>
+         <data:post.commentHtml/>
+      </div>
+    </div>
+
+    <p class='comment-footer'>
+      <b:if cond='data:post.allowNewComments'>
+        <b:include data='post' name='threadedCommentForm'/>
+      <b:else/>
+        <data:post.noNewCommentsText/>
+      </b:if>
+      <b:if cond='data:post.showManageComments'>
+        <b:include data='post' name='manageComments'/>
+      </b:if>
+    </p>
+
+    <b:if cond='data:showCmtPopup'>
+      <div id='comment-popup'>
+        <iframe allowtransparency='allowtransparency' frameborder='0' id='comment-actions' name='comment-actions' scrolling='no'>
+        </iframe>
+      </div>
+    </b:if>
+  </section>
+</b:includable>
+      </b:widget>
+    </b:section>
+    <div class='void void-2x'/>
+  
+    <!-- # sidebar -->
+    <b:section class='se-Sidebar' cond='data:view.isLayoutMode OR ( data:view.isHomepage )' id='Sidebar'>
+      <b:widget id='Label1' locked='false' title='Labels' type='Label' visible='true'>
+        <b:widget-settings>
+          <b:widget-setting name='sorting'>ALPHA</b:widget-setting>
+          <b:widget-setting name='display'>LIST</b:widget-setting>
+          <b:widget-setting name='selectedLabelsList'>ACE Editor,CSS</b:widget-setting>
+          <b:widget-setting name='showType'>USER_SELECTED</b:widget-setting>
+          <b:widget-setting name='showFreqNumbers'>false</b:widget-setting>
+        </b:widget-settings>
+        <b:includable id='main' var='this'>
+  <b:include name='widget-title'/>
+  <b:include name='content'/>
+</b:includable>
+        <b:includable id='cloud'>
+  <b:loop values='data:labels' var='label'>
+    <span class='label-size'>
+      <b:class expr:name='&quot;label-size-&quot; + data:label.cssSize'/>
+      <a class='label-name' expr:href='data:label.url'>
+        <data:label.name/>
+        <b:if cond='data:this.showFreqNumbers'>
+          <span class='label-count'><data:label.count/></span>
+        </b:if>
+      </a>
+    </span>
+  </b:loop>
+</b:includable>
+        <b:includable id='content'>
+  <div class='widget-content'>
+    <b:class expr:name='data:this.display + &quot;-label-widget-content&quot;'/>
+    <b:include cond='data:this.display == &quot;list&quot;' name='list'/>
+    <b:include cond='data:this.display == &quot;cloud&quot;' name='cloud'/>
+  </div>
+</b:includable>
+        <b:includable id='list'>
+  <ul>
+    <b:loop values='data:labels' var='label'>
+      <li>
+        <a class='label-name' expr:href='data:label.url'>
+          <data:label.name/>
+          <b:if cond='data:this.showFreqNumbers'>
+            <span class='label-count'><data:label.count/></span>
+          </b:if>
+        </a>
+      </li>
+    </b:loop>
+  </ul>
+</b:includable>
+      </b:widget>
+    </b:section>
+    <div class='void void-2x'/>
+    <div class='void void-2x'/>
+  
+    <!-- # footer -->
+    <b:section class='SectionFooter' id='Footer'>
+      <b:widget id='AdSense1' locked='false' title='' type='AdSense' visible='true'>
+        <b:widget-settings>
+          <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
+          <b:widget-setting name='style.textcolor'>#ffffff</b:widget-setting>
+          <b:widget-setting name='style.layout'>1x1</b:widget-setting>
+          <b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
+          <b:widget-setting name='style.urlcolor'>#ffffff</b:widget-setting>
+          <b:widget-setting name='style.linkcolor'>#ffffff</b:widget-setting>
+          <b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
+        </b:widget-settings>
+        <b:includable id='main'>
+  <div class='widget-content'>
+    <b:if cond='data:adCode'>
+      <data:adCode/>
+    <b:else/>
+      <b:include name='defaultAdUnit'/>
+    </b:if>
+  </div>
+</b:includable>
+      </b:widget>
+      <b:widget id='LinkList2' locked='false' title='' type='LinkList' visible='true'>
+        <b:widget-settings>
+          <b:widget-setting name='sorting'>NONE</b:widget-setting>
+          <b:widget-setting name='text-1'>Editorial</b:widget-setting>
+          <b:widget-setting name='link-1'>https://vanillawebdev.blogspot.com/p/editorial.html</b:widget-setting>
+          <b:widget-setting name='text-0'>About</b:widget-setting>
+          <b:widget-setting name='link-2'>https://www.youtube.com/@vanillawebdev</b:widget-setting>
+          <b:widget-setting name='link-0'>/p/about.html</b:widget-setting>
+          <b:widget-setting name='text-2'>YouTube</b:widget-setting>
+        </b:widget-settings>
+        <b:includable id='main'>
+  <b:include name='widget-title'/>
+  <b:include name='content'/>
+</b:includable>
+        <b:includable id='content'>
+ <div class='widget-content'>
+   <ul>
+     <b:loop values='data:links' var='link'>
+       <li><a expr:href='data:link.target'><data:link.name/></a></li>
+     </b:loop>
+   </ul>
+ </div>
+</b:includable>
+      </b:widget>
+    </b:section>
+    <div class='void void-2x'/>
+    
+  </div>
+  
+  
+  <!-- markups -->
+  <b:defaultmarkups>
+  <b:defaultmarkup type='BlogSearch'>
+
+    <b:includable id='main' var='this'>
+      <div class='widget-content wg-SearchBar' role='search'>
+        <b:include name='searchForm'/>
+      </div>
+    </b:includable>
+
+    <b:includable id='searchForm'>
+      <form expr:action='data:blog.searchUrl'>
+        <b:attr cond='not data:view.isPreview' name='target' value='_top'/>
+        <b:include name='urlParamsAsFormInput'/>
+        <div class='search-input'>
+          <input autocomplete='off' expr:aria-label='data:messages.searchThisBlog' expr:placeholder='data:messages.searchThisBlog' expr:value='data:view.isSearch ? data:view.search.query.escaped : &quot;&quot;' name='q'/>
+        </div>
+        <b:include name='searchSubmit'/>
+      </form>
+    </b:includable>
+    
+    <b:includable id='searchSubmit'>
+      <input class='search-action' expr:value='data:messages.search.escaped' type='submit'/>
+    </b:includable>
+
+  </b:defaultmarkup>
+</b:defaultmarkups>
+  <b:defaultmarkups>
+  
+  <b:defaultmarkup type='Blog'>
+    <!-- @Blog -->
+    <b:includable id='main' var='this'>
+      
+      <b:if cond='data:view.isSingleItem'>
+        <!-- single item -->
+        
+        <b:include name='@modules/codeblock@v2.3'/>
+        <b:include cond='data:view.url.raw contains &quot;/p/editorial.html&quot;' name='@modules/live-html@v1'/>
+        
+        <b:include name='singleItemView'/>
+        
+      <b:else/>
+        <!-- multiple item -->
+        <b:include name='multipleItemsView'/>
+      </b:if>
+      
+      
+    </b:includable>
+    
+    <!-- single item -->
+    <b:includable id='singleItemView' var='this'>
+      <b:loop values='data:posts' var='post'>
+        <!-- post body wrapper -->
+        <div class='wg-SinglePost'>
+          
+          <!-- # edit link -->
+          <div style='min-height:20px;'>
+            <div class='item-control blog-admin'>
+              <b:if cond='data:view.isPost'>
+                <a expr:href='&quot;https://www.blogger.com/blog/post/edit/&quot; + data:blog.blogId + &quot;/&quot; + data:post.id'>Edit this post</a>
+              <b:elseif cond='data:view.isPage'/>
+                <a expr:href='&quot;https://www.blogger.com/blog/page/edit/&quot; + data:blog.blogId + &quot;/&quot; + data:post.id'>Edit this post</a>
+              </b:if>
+            </div>
+          </div>
+          
+          <!-- # title -->
+          <h1 class='post-heading'>
+            <span class='post-title'>
+              <data:post.title/>
+            </span>
+          </h1>
+          <div class='void void-1x'/>
+          <div class='void void-2x'/>
+          
+          <!-- # body -->
+          <article class='post-body'>
+            <data:post.body/>
+          </article>
+        </div>
+        <div class='void void-4x'/>
+        <div class='void void-2x'/>
+
+        <!-- # post info -->
+        <div class='d-flex justify-content-center'>
+          <b:include name='PostInfo'/>
+        </div>
+        <div class='void void-4x'/>
+        
+        
+        <!-- # ads -->
+        <b:if cond='data:global.isProd'>
+          <div class='text-center'>
+            <div class='void void-2x'/>
+              
+              <script async='async' crossorigin='anonymous' src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1854718205178548'/>
+              <ins class='adsbygoogle' data-ad-client='ca-pub-1854718205178548' data-ad-format='auto' data-ad-slot='4679958295' data-full-width-responsive='true' style='display:block'/>
+              <script>
+                   (adsbygoogle = window.adsbygoogle || []).push({});
+              </script>
+              
+            <div class='void void-2x'/>
+          </div>
+        </b:if>
+        
+        
+        <!-- # post navigation -->
+        <b:include name='post-navigation'/>
+        <div class='void void-2x'/>
+        
+        <!-- # comment -->
+        <div class='wg-Cmt'>
+          <b:include data='post' name='commentPicker'/>
+        </div>
+        
+      </b:loop>
+    </b:includable>
+    
+    <!-- # widget post info-->
+    <b:includable id='PostInfo'>
+      <div class='wg-PostInfo'>
+        
+        <!-- post details -->
+        <h1 class='heading'>Post Details</h1>
+        <ul>
+          <li>
+            <b>Published: </b> <data:post.date/>
+          </li>
+          <li>
+            <b>Last updated: </b> <data:post.lastUpdated/>
+          </li>
+        </ul>
+        <div class='void void-full'/>
+        
+        <b:if cond='data:post.labels'>
+          <h1 class='heading'>Tags</h1>
+          <!--labels chips-->
+          <b:if cond='data:post.labels'>
+            <div class='wg-LabelChips'>
+              <b:loop values='data:post.labels' var='label'>
+                <a class='item' expr:href='data:label.url'>
+                  <data:label.name/>
+                </a>
+              </b:loop>
+            </div>
+          </b:if>
+        </b:if>
+        
+      </div>
+    </b:includable>
+    
+    <!-- multiple items posts -->
+    <b:includable id='multipleItemsView' var='this'>
+      <div class='wg-HomePosts'>
+        <b:loop values='data:posts' var='post'>
+          <div class='post'>
+            <a class='post-link gap-full' expr:href='data:post.url'>
+              <div class='post-title'>
+                <data:post.title/>
+              </div>
+              <div class='post-date'>
+                <data:post.date/>
+              </div>
+            </a>
+          </div>
+        </b:loop>
+      </div>
+      <div class='void void-2x'/>
+      
+      <!-- # post navigation -->
+      <b:include name='post-navigation'/>
+      
+    </b:includable>
+    
+    <!-- # post navigation -->
+    <b:includable id='post-navigation'>
+      <div>
+      
+        <div class='d-flex justify-content-between'>
+          <div>
+            <b:if cond='data:newerPageUrl'>  
+              <a expr:href='data:newerPageUrl'>Newer posts</a>
+            </b:if>
+          </div>
+          
+          <div>
+            <b:if cond='data:olderPageUrl'>
+              <a expr:href='data:olderPageUrl'>Older posts</a>
+            </b:if>
+          </div>
+        </div>
+        
+        <b:if cond='data:newerPageUrl OR data:olderPageUrl'>  
+          <div class='void void-2x'/>
+          <div class='text-center'>
+            <a expr:href='data:blog.homepageUrl'>Home</a>
+          </div>
+        </b:if>
+      
+      </div>
+    </b:includable>
+      
+      
+  </b:defaultmarkup>
+  
+</b:defaultmarkups>
+  <b:defaultmarkups>
+  
+  <!-- @Blog -->
+  <b:defaultmarkup type='FeaturedPost'>
+    <b:includable id='main' var='this'>
+      
+      <b:loop values='data:posts' var='post'>
+        <div class='post-body'>
+          <data:post.body/>
+        </div>
+      </b:loop>
+    
+    </b:includable>
+  </b:defaultmarkup>
+  
+</b:defaultmarkups>
+  <b:defaultmarkups>
+  <b:defaultmarkup type='Common'>
+    
+    <!-- JS includables -->
+    <b:includable id='@css' var='opt'>
+      <b:with value='data:opt ? data:opt.path : &quot;&quot;' var='path'>
+        <b:tag expr:href='data:global.cssHostUrl + data:path' name='link' rel='stylesheet'/>
+      </b:with>
+    </b:includable>
+    
+    <!-- @modules/codeblock@v2.3 -->
+    <b:includable id='@modules/codeblock@v2.3'>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js'/>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css' rel='stylesheet'/>
+
+<style>
+table[data-type=&quot;code&quot;] {
+  display:grid;
+  overflow:auto;
+  border:0;
+  border-color:transparent;
+  background: #242729;
+  color: white;
+  font-size: 1rem;
+  border-radius: 6px;
+  line-height: 1.4rem;
+}
+pre code.hljs {
+  color: white;
+  background: inherit;
+  padding: 0;
+}
+
+table[data-type=&quot;code&quot;] pre { margin: 0.3rem 0.6rem; }
+table[data-type=&quot;code&quot;] th { display:none; }
+table[data-type=&quot;code&quot;] tbody { display: grid; }
+table[data-type=&quot;code&quot;] tbody, table[data-type=&quot;code&quot;] tr, table[data-type=&quot;code&quot;] td { overflow: inherit!important;border:0; }
+table[data-type=&quot;code&quot;] tr:last-child { min-height: 40px; position: relative; }
+table[data-type=&quot;code&quot;] tr:nth-child(3) { display: none; }
+
+/*hljs overwrite*/
+/*--------------*/
+/*html*/
+.hljs-deletion, .hljs-number, .hljs-quote, .hljs-selector-class, .hljs-selector-id, .hljs-string, .hljs-template-tag, .hljs-type { color: #e0d88e }
+.hljs-tag .hljs-attr, .hljs-tag .hljs-name { color: #ce5061 }
+.hljs-tag .hljs-attr { color: #69c36d }
+.hljs-punctuation, .hljs-tag { color: #f9f9f9aa }
+/*javascript*/
+.hljs-section, .hljs-title { color: #4caf50 }
+.hljs-keyword, .hljs-literal, .hljs-selector-tag { color: #319cf1 }
+
+
+.ext-paco-block{
+  display: flex;
+  font-size: 0.9rem;
+  text-align: right;
+  justify-content: flex-end;
+  align-items:center;
+}
+.ext-paco-block .copy-icon {
+  background: url(https://1.bp.blogspot.com/-_wkP45GUv08/YYkAidTsrhI/AAAAAAAARAw/g1mzL45L1D4jmiJ99mIBaInLVa24GFSKACLcBGAsYHQ/s16/baseline_content_copy_black_24dp.png);
+  height: 16px;
+  width: 16px;
+}
+.ext-paco-block .copy-text{
+  display:none;
+  padding: 2px 8px;
+}
+.ext-paco-block .right {
+  display: flex;
+  gap: 8px;
+}
+.ext-paco-block button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 6px 8px;
+  background: #afafaf38;
+  border: none;
+  opacity: 0.5;
+  margin-left: 8px;
+}
+.ext-paco-block button:hover{
+  background: #e3e3e3;
+  opacity: 1;
+}
+</style>
+<script>
+/*! <![CDATA[ */
+
+(function(w, d) {
+  'use strict';
+
+  let _containerEl = d;
+  if(w.hljs) {
+      w.hljs.highlightLinesAll = highlightLinesAll;
+      w.hljs.highlightLinesElement = highlightLinesElement;
+
+      /* deprecated */
+      w.hljs.initHighlightLinesOnLoad = initHighlightLinesOnLoadWithDeprecated;
+      w.hljs.highlightLinesCode = highlightLinesCodeWithDeprecated;
+  }
+
+  function highlightLinesAll(options, containerEl) {
+      for(let i = 0; i < options.length; ++i) {
+          for(let option of options[i]) {
+              --option.start;
+              --option.end;
+          }
+      }
+      if (containerEl) {
+        _containerEl = containerEl;
+      }
+      initHighlightLinesOnLoad(options);
+  }
+
+  let initHighlightLinesOnLoadWithDeprecatedCalled = false;
+  function initHighlightLinesOnLoadWithDeprecated(options) {
+      if(!initHighlightLinesOnLoadWithDeprecatedCalled) {
+          console.log('hljs.initHighlightLinesOnLoad is deprecated. Please use hljs.highlightLinesAll');
+          initHighlightLinesOnLoadWithDeprecatedCalled = true;
+      }
+      initHighlightLinesOnLoad(options);
+  }
+
+  function initHighlightLinesOnLoad(options) {
+      function callHighlightLinesCode() {
+          let codes = _containerEl.getElementsByClassName('hljs');
+          for(let i = 0; i < codes.length; ++i) {
+              highlightLinesCode(codes[i], options[i]);
+          }
+      }
+
+      if(d.readyState !== 'loading') {
+          callHighlightLinesCode();
+      }
+      else {
+          w.addEventListener('DOMContentLoaded', function() {
+              callHighlightLinesCode();
+          });
+      }
+  }
+
+  function highlightLinesElement(code, options, has_numbers) {
+      for(let option of options) {
+          --option.start;
+          --option.end;
+      }
+      highlightLinesCode(code, options, has_numbers);
+  }
+
+  let highlightLinesCodeWithDeprecatedCalled = false;
+  function highlightLinesCodeWithDeprecated(code, options, has_numbers) {
+      if(!highlightLinesCodeWithDeprecatedCalled) {
+          console.log('hljs.highlightLinesCode is deprecated. Please use hljs.highlightLinesElement');
+          highlightLinesCodeWithDeprecatedCalled = true;
+      }
+      highlightLinesCode(code, options, has_numbers);
+  }
+
+  function highlightLinesCode(code, options, has_numbers) {
+      function highlightLinesCodeWithoutNumbers() {
+          code.innerHTML = code.innerHTML.replace(/([ \S]*\n|[ \S]*$)/gm, function(match) {
+                  return '<div class="highlight-line">' + match + '</div>';
+                  });
+
+          if(options === undefined) {
+              return;
+          }
+          let lines = code.getElementsByClassName('highlight-line');
+          for(let option of options) {
+              for(let j = option.start; j <= option.end; ++j) {
+                  lines[j].classList.add(option.group)
+              }
+          }
+      }
+      function highlightLinesCodeWithNumbers() {
+          let tables = code.getElementsByTagName('table');
+          if(tables.length == 0) {
+              if(count-- < 0) {
+                  clearInterval(interval_id);
+                  highlightLinesCodeWithoutNumbers();
+              }
+              return;
+          }
+
+          clearInterval(interval_id);
+
+          let table = tables[0];
+          table.style.width = '100%';
+          let hljs_ln_numbers = table.getElementsByClassName('hljs-ln-numbers');
+          for(let hljs_ln_number of hljs_ln_numbers) {
+              hljs_ln_number.style.width = '2em';
+          }
+
+          if(options === undefined) {
+              return;
+          }
+          let lines = code.getElementsByTagName('tr');
+          for(let option of options) {
+              for(let j = option.start; j <= option.end; ++j) {
+                  lines[j].style.backgroundColor = option.color;
+              }
+          }
+      }
+
+      if(hljs.hasOwnProperty('initLineNumbersOnLoad') && has_numbers !== false) {
+          let count = 100;
+          let interval_id = setInterval(highlightLinesCodeWithNumbers, 100);
+          return;
+      }
+
+      highlightLinesCodeWithoutNumbers();
+  }
+
+}(window, document));
+
+(function() {
+  
+  let $ = (selector, node = document) => node.querySelectorAll(selector);
+  let version = Math.floor(2.3);
+  let templateId = `paco-code-block-v${version}`;
+  
+  class CustomElement extends HTMLElement {
+    constructor(e) {
+      super();
+      this.extensions = {};
+      this.options = [];
+    }
+    
+    connectedCallback() {
+      window.setTimeout(() => {
+        this.rootTable = this.findRootTableNode();
+        this.detectExtension();
+        this.hightlight();
+        if (!this.options.includes('no-copy'))
+          this.initExtensions();
+      });
+    }
+    
+    detectExtension() {
+      let extensions = $('template[name="ext-paco-block"]');
+      for (let ext of extensions) {
+        this.extensions[ext.dataset.id] = ext.content.cloneNode(true);
+      }
+    }
+    
+    hightlight() {
+      let pre = $('pre', this)[0];
+      let language = this.getLanguage();
+      pre.innerHTML = '<code class="language-'+language+'">'+pre.innerHTML+'</code>';
+      hljs.highlightElement(pre.firstElementChild);
+      this.highlightLines();
+    }
+    
+    highlightLines() {
+      let highlightSettings = $('tr td', this.rootTable)[1];
+      if (highlightSettings) {
+        let options = [];
+        let lines = highlightSettings.innerHTML.trim().replace(/ +/g,'').replace(/\n+/g,'\n').split('\n');
+        for (let line of lines) {
+          let group = line.split(':')[0];
+          let lineSeries = line.split(':')[1].split(',');
+          for (let series of lineSeries) {
+            let start = window.parseInt(series);
+            let end = start;
+            if (series.includes('-')) {
+              end = window.parseInt(series.split('-')[1]);
+            }
+            options.push({start, end, group});
+          }
+        }
+        
+        hljs.highlightLinesAll([
+          options,
+        ], this);
+      }
+    }
+    
+    initExtensions() {
+      for (let key in this.extensions) {
+        switch (key) {
+          case 'copy':
+            this.initControl(this.extensions[key]);
+            break;
+        }
+      }
+    }
+    
+    initControl(extNode) {
+      if (this.rootTable) {
+        this.notifNode = $('span', extNode)[0];
+        $('button', extNode)[0].addEventListener('click', this.copySnippetCode.bind(this));
+        
+        this.rootTable.parentNode.insertBefore(extNode, this.rootTable);
+      }
+    }
+              
+    getLanguage() {
+      let language = 'plaintext'
+      if (this.rootTable) {
+        let node = $('th', this.rootTable)[0];
+        let definedLanguage = node.textContent.trim().split('|');
+        let myLan = definedLanguage[0].trim();
+        if (myLan.length > 0) {
+          language = myLan;
+        }
+        if (definedLanguage[1]) {
+          let opt = definedLanguage[1].trim().split(',');
+          this.options = opt;
+        }
+      }
+      return language;
+    }
+    
+    findRootTableNode() {
+      let node = this;
+      let retry = 5;
+      while (node.parentNode && retry > 0) {
+        if (node.dataset.type == 'code') {
+          let style = node.getAttribute('style');
+          if (style) {
+            style = style.replace('%px', '%').replace(/color:.*?;/, '')
+            node.setAttribute('style', style); 
+          }
+          return node;
+          break;
+        }
+        node = node.parentNode;
+        retry--;
+      }
+      return null;
+    }
+    
+    copySnippetCode() {
+      let node  = document.createElement('textarea');
+      node.value = this.textContent;
+      document.body.append(node);
+      node.select();
+      node.setSelectionRange(0, node.value.length);
+      document.execCommand("copy");
+      node.remove();
+      this.showCopyNotif();
+    }
+    
+    showCopyNotif() {
+      this.notifNode.style.display = 'block';
+      window.clearTimeout(this.copyTimeout);
+      this.copyTimeout = window.setTimeout(this.hideCopyNotif.bind(this), 1000);
+    }
+    
+    hideCopyNotif() {
+      let node = this.extensions['code'];
+      this.notifNode.style.display = 'none';
+    }
+    
+  }
+  customElements.define(templateId, CustomElement);
+})();
+
+/*! ]]> */
+</script>
+
+<template data-id='copy' name='ext-paco-block'>
+  <div class='ext-paco-block'>
+  <div style='display:flex;'>
+    <span class='copy-text'>Copied</span>
+  </div>
+  <div class='right'>
+  <button><span>Copy</span> <span class='copy-icon'/></button></div></div>
+</template>
+    </b:includable>
+    
+    <!-- @modules/live-html@v1 -->
+    <b:includable id='@modules/live-html@v1'>
+      <style>
+  table[data-type=&quot;paco-live-html-v1&quot;], table[data-type=&quot;paco-live-html-v1&quot;] td {
+    border: 0;
+    background: #3e3e3e;
+  }
+  table[data-type=&quot;paco-live-html-v1&quot;] iframe {
+    border: 0;
+    width: 100%;
+    min-height: 400px;
+    background: white;
+  }
+  table[data-type=&quot;paco-live-html-v1&quot;] tr:nth-child(2) td {
+      padding: 0!important;
+  }
+</style>
+<script>
+/*! <![CDATA[ */
+
+(function() {
+  
+  let $ = (selector, node = document) => node.querySelectorAll(selector);
+  let version = Math.floor(1);
+  let templateId = `paco-live-html-v${version}`;
+  
+  class CustomElement extends HTMLElement {
+    
+    constructor() {
+      super();
+      this.rootTable = this.findRootTableNode();
+      let fragment = document.createDocumentFragment();
+      this.attachShadow({mode: 'open'}).append(fragment);
+    }
+    
+    connectedCallback() {
+      let waitInterval = window.setInterval(() => {
+        if (this.rootTable === null) {
+          this.rootTable = this.findRootTableNode();
+        } else {
+          window.clearInterval(waitInterval);
+          
+          // this.style.display = 'block';
+          
+          this.init();
+        }
+      }, 100);
+    }
+    
+    init() {
+      let pre = $('pre', this)[0];
+      // let node = document.createElement('div');
+      // node.setAttribute('style', 'border:0;width:100%;height:100%')
+      // node.innerHTML = this.decodeHtml(pre.innerHTML);
+      
+      let node = document.createElement('iframe');
+      // node.setAttribute('style', 'border:0;width:100%;height:100%')
+      node.src = URL.createObjectURL(new Blob([this.decodeHtml(pre.innerHTML)], {type: 'text/html'}));
+      $('td',this.rootTable)[1].append(node);
+      // pre.parentNode.insertBefore(node, pre);
+      // this.shadowRoot.append(node)
+    }
+    
+    decodeHtml(html) {
+      var txt = document.createElement("textarea");
+      txt.innerHTML = html;
+      return txt.value;
+    }
+    
+    findRootTableNode() {
+      let node = this;
+      let retry = 5;
+      while (node.parentNode && retry > 0) {
+        if (node.dataset.type == templateId) {
+          return node;
+        }
+        node = node.parentNode;
+        retry--;
+      }
+      return null;
+    }
+    
+  }
+  
+  customElements.define(templateId, CustomElement);
+  
+})();
+
+/*! ]]> */
+</script>
+    </b:includable>
+    
+    <b:includable id='@modules/stop-page-tracking'>
+      <!-- @modules/stop-page-tracking -->
+      <script>
+        function noTrackViews() {
+          var date = new Date();
+          date.setTime(date.getTime() + (180 * 24 * 60 * 60 * 1000));
+          var expires = &quot;; expires=&quot; + date.toGMTString();
+          document.cookie = &quot;_ns=2&quot; + expires + &quot;; path=/&quot;;
+        }
+        // renew automatically on last visit
+        if (document.cookie.includes(&#39;_ns=2&#39;)) {
+            noTrackViews();
+        }
+      </script>
+      <b:if cond='               ( data:view.url.raw == (data:blog.homepageUrl.raw + &quot;/notrack&quot;) ) OR               ( data:view.url.raw contains (&quot;notrack&quot; + &quot;?m=1&quot;) AND data:blog.isMobile )       '>
+        <script>
+          noTrackViews();
+          alert(&#39;Your views will no longer be tracked.&#39;)
+        </script>
+      </b:if>
+    </b:includable>
+
+    <b:includable id='@modules/blog-shortcut'>
+      <!--nodivless-->
+      <b:with value='[{           path: &quot;/admin&quot;,           target: (&quot;https://blogger.com/blog/posts/&quot; + data:blog.blogId),         }, {           path: &quot;/stats&quot;,           target: (&quot;https://blogger.com/blog/stats/week/&quot; + data:blog.blogId),         }, {           path: &quot;/layout&quot;,           target: (&quot;https://blogger.com/blog/layout/&quot; + data:blog.blogId),         }, {           path: &quot;/xml&quot;,           target: (&quot;https://blogger.com/blog/themes/edit/&quot; + data:blog.blogId),         }]' var='links'>
+      <!--/nodivless-->
+        
+        <b:loop values='data:links' var='link'>
+          <b:if cond='data:view.url.raw == (data:blog.homepageUrl.raw + data:link.path)'>
+            <a expr:href='data:link.target' id='th-link'/>
+            <script> document.querySelector(&#39;#th-link&#39;).click(); </script>
+          <b:elseif cond='data:blog.isMobile AND data:view.url.raw contains (&quot;/&quot; + data:link.path + &quot;?m=1&quot;)'/>
+            <a expr:href='data:link.target' id='th-link'/>
+            <script> document.querySelector(&#39;#th-link&#39;).click(); </script>
+          </b:if>
+        </b:loop>
+        
+      </b:with>
+    </b:includable>
+
+      
+  </b:defaultmarkup>
+</b:defaultmarkups>
+  
+</body>
+</b:with>
+</b:with>
+</html>

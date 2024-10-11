@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<!-- scope-id counter: 0 -->
+<html b:css="false" b:defaultwidgetversion="2" b:layoutsVersion="3" b:responsive="true" b:templateUrl="indie.xml" b:templateVersion="1.3.3" expr:dir="data:blog.languageDirection" expr:lang="data:blog.locale" xmlns="http://www.w3.org/1999/xhtml" xmlns:b="http://www.google.com/2005/gml/b" xmlns:data="http://www.google.com/2005/gml/data" xmlns:expr="http://www.google.com/2005/gml/expr">
+<b:with var="isDev" value='data:blog.homepageUrl.raw contains "https://dev-"'>
+<b:with var="assets" value='{
+  prod: {
+    baseUrl: "https://vanillawebdev-assets.web.app/1.0",
+    cachePrefix: "?uid=NDA0NjE2NDE",
+  },
+  dev: {
+    baseUrl: "/1.0"
+  }
+}'>
+<b:with var="global" value='{
+  isProd: !data:isDev,
+}'>
+<head>
+  
+  <!-- custom blogger shortcut -->
+  <b:include name='@modules/blog-shortcut'/>
+  <b:if cond='data:view.url.raw + "!!" contains "/notrack!!"'>
+    <!-- no track script -->
+    <b:include name='@modules/stop-page-tracking'/>
+  </b:if>
+  
+  <!-- $blogTitle # SEO meta (title, desc, url, site) -->
+  <b:if cond='data:view.isArchive'>
+    <title><data:messages.blogArchive/> : <data:blog.pageName/></title>
+  <b:elseif cond='data:view.isSingleItem'/>
+    <title><b:eval expr='data:blog.pageName ? (data:blog.pageName + " - " + data:blog.title.escaped) : data:blog.title.escaped'/></title>
+  
+    <meta property="og:title" expr:content='data:blog.pageName ? (data:blog.pageName + " - " + data:blog.title) : data:blog.title'/>
+    <meta property="og:url" expr:content="data:view.url"/>
+    <meta property="og:site_name" expr:content="data:blog.title"/>
+    
+    <b:if cond='data:view.isHomepage'>
+      <meta property="og:description" expr:content="data:view.description"/>
+      <meta name="description" expr:content="data:view.description"/>
+    </b:if>
+  <b:else/>
+    <title><data:blog.title/></title>
+  </b:if>
+  <!-- $blogTitle -->
+  
+  <!-- SEO meta : post thumbnail-->
+  <b:if cond="data:blog.postImageUrl">
+    <meta expr:content='resizeImage(data:blog.postImageUrl, 246, "1:1")' property='og:image'/>
+  </b:if>
+  
+  <meta content='website' property='og:type'/>
+  <b:if cond='data:view.isArchive'>
+    <meta content='noindex, noarchive' name='robots'/>
+  </b:if>
+  
+  <!-- other meta -->
+  <meta name='viewport' content='width=device-width'/>
+  <meta charset='UTF-8'/>
+   
+  <!-- blog skin -->
+  <!--nodivless-->
+  <b:skin version='1.3.3'>
+    <file src='css/layout.css'></file>
+    /*! <![CDATA[ *//* !!! */
+    <file src='skin.html'></file>
+    /*! ]]> *//* !!! */
+  </b:skin>
+  <!--/nodivless-->
+  
+  <!-- stylesheet -->
+  <b:include name='@css' data='{ path: "normalize.min.css" }'/>
+  <b:include name='@css' data='{ path: "style.css" }'/>
+  <b:include name='@css' data='{ path: "widgets.css" }'/>
+  
+  <b:if cond='data:view.isPreview'>
+    <!-- disable preview interaction lock -->
+    <style> .blogger-clickTrap { display:none } </style>
+  </b:if>
+
+</head>
+<!-- # body -->
+<body class="skin-body">
+  
+  
+  [ .wg-centered-layout
+    
+    [ .void .void-2x]
+  
+    <!-- # top nav -->
+    [
+      <b:section id="TopNav">
+        <b:widget id="BlogSearch1" type="BlogSearch" locked="true"/>
+      </b:section>
+      [ .void .void-2x]
+    ]
+    
+    <!-- # header -->
+    [
+      <b:section id="Header" class="SectionHeader"></b:section>
+      [ .void .void-1x]
+      [ .void .void-2x]
+    ]
+    
+    <!-- # pinned post -->
+    <b:if cond="data:view.isLayoutMode OR ( data:view.isHomepage )">
+      <b:section id="PinnedPosts" class="SectionPinnetPosts"></b:section>
+      [ .void .void-2x]
+      [ .void .void-2x]
+    </b:if>
+    
+    <!-- # main blog body -->
+    
+    <!-- # homepage: latest post heading -->
+    <b:if cond="data:view.isHomepage">
+      [h1 'Latest Posts']
+    </b:if>
+    
+    <!-- # main blog footer -->
+    <b:section id="Main">
+      <b:widget type="Blog" id="Blog1" locked="false" version="2"></b:widget>
+    </b:section>
+    [ .void .void-2x]
+  
+    <!-- # sidebar -->
+    <b:section id="Sidebar" class="se-Sidebar" cond="data:view.isLayoutMode OR ( data:view.isHomepage )"></b:section>
+    [ .void .void-2x]
+    [ .void .void-2x]
+  
+    <!-- # footer -->
+    <b:section id="Footer" class="SectionFooter"></b:section>
+    [ .void .void-2x]
+    
+  ]
+  
+  
+  <!-- markups -->
+  <file src="widgets/BlogSearch.html"></file>
+  <file src="widgets/Blog.html"></file>
+  <file src="widgets/FeaturedPost.html"></file>
+  <file src="markups.html"></file>
+  
+  <!-- # PWA -->
+  <b:if cond="data:isDev">
+    <b:tag name="script" src="/pwa-cacher.js"/>
+    <script>
+    /*! <![CDATA[ */
+        if (typeof(navigator) !== 'undefined' && 'serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js').catch(function(e) {
+            console.error(e);
+          });
+        }
+    /*! ]]> */
+    </script>
+  </b:if>
+  
+</body>
+</b:with>
+</b:with>
+</b:with>
+</html>

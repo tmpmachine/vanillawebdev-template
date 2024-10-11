@@ -1,0 +1,184 @@
+<b:defaultmarkups>
+  
+  <b:defaultmarkup type="Blog">
+    <!-- @Blog -->
+    <b:includable id="main" var="this">
+      
+      <b:if cond="data:view.isSingleItem">
+        <!-- single item -->
+        
+        <b:include name="@modules/codeblock@v2.3"/>
+        <b:include name="@modules/live-html@v1" cond='data:view.url.raw contains "/p/editorial.html"'/>
+        
+        <b:include name="singleItemView"/>
+        
+      <b:else/>
+        <!-- multiple item -->
+        <b:include name="multipleItemsView"/>
+      </b:if>
+      
+      
+    </b:includable>
+    
+    <!-- single item -->
+    <b:includable id="singleItemView" var="this">
+      <b:loop values="data:posts" var="post">
+        <!-- post body wrapper -->
+        [ .wg-SinglePost
+          
+          <!-- # edit link -->
+          [ {mh:20px}
+            [ .item-control .blog-admin
+              <b:if cond="data:view.isPost">
+                [a expr:href='"https://www.blogger.com/blog/post/edit/" + data:blog.blogId + "/" + data:post.id' "Edit this post"]
+              <b:elseif cond="data:view.isPage"/>
+                [a expr:href='"https://www.blogger.com/blog/page/edit/" + data:blog.blogId + "/" + data:post.id' "Edit this post"]
+              </b:if>
+            ]
+          ]
+          
+          <!-- # title -->
+          [h1 .post-heading
+            [s .post-title
+              <data:post.title/>
+            ]
+          ]
+          [ .void .void-1x]
+          [ .void .void-2x]
+          
+          <!-- # body -->
+          <article class="post-body">
+            <data:post.body/>
+          </article>
+        ]
+        [ .void .void-4x]
+        [ .void .void-2x]
+
+        <!-- # post info -->
+        [ .d-flex .justify-content-center
+          <b:include name="PostInfo"/>
+        ]
+        [ .void .void-4x]
+        
+        
+        <!-- # ads -->
+        <b:if cond="data:global.isProd">
+          [ .text-center
+            [ .void .void-2x]
+              
+              <script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1854718205178548" crossorigin="anonymous"></script>
+              <ins class="adsbygoogle"
+                   style="display:block"
+                   data-ad-client="ca-pub-1854718205178548"
+                   data-ad-slot="4679958295"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+              <script>
+                   (adsbygoogle = window.adsbygoogle || []).push({});
+              </script>
+              
+            [ .void .void-2x]
+          ]
+        </b:if>
+        
+        
+        <!-- # post navigation -->
+        <b:include name="post-navigation"/>
+        [ .void .void-2x]
+        
+        <!-- # comment -->
+        [ .wg-Cmt
+          <b:include name="commentPicker" data="post"/>
+        ]
+        
+      </b:loop>
+    </b:includable>
+    
+    <!-- # widget post info-->
+    <b:includable id="PostInfo">
+      [ .wg-PostInfo
+        
+        <!-- post details -->
+        [h1 'Post Details' .heading]
+        [ul
+          [li
+            [b 'Published: '] <data:post.date/>
+          ]
+          [li
+            [b 'Last updated: '] <data:post.lastUpdated/>
+          ]
+        ]
+        [ .void .void-full]
+        
+        <b:if cond="data:post.labels">
+          [h1 'Tags' .heading]
+          <!--labels chips-->
+          <b:if cond="data:post.labels">
+            [ .wg-LabelChips
+              <b:loop var="label" values="data:post.labels">
+                [a expr:href="data:label.url" .item
+                  <data:label.name/>
+                ]
+              </b:loop>
+            ]
+          </b:if>
+        </b:if>
+        
+      ]
+    </b:includable>
+    
+    <!-- multiple items posts -->
+    <b:includable id="multipleItemsView" var="this">
+      [ .wg-HomePosts
+        <b:loop values="data:posts" var="post">
+          [ .post
+            [a expr:href="data:post.url" .post-link .gap-full
+              [ .post-title
+                <data:post.title/>
+              ]
+              [ .post-date
+                <data:post.date/>
+              ]
+            ]
+          ]
+        </b:loop>
+      ]
+      [ .void .void-2x]
+      
+      <!-- # post navigation -->
+      <b:include name="post-navigation"/>
+      
+    </b:includable>
+    
+    <!-- # post navigation -->
+    <b:includable id="post-navigation">
+      [
+      
+        [ .d-flex .justify-content-between
+          [
+            <b:if cond="data:newerPageUrl">  
+              [a 'Newer posts' expr:href="data:newerPageUrl"]
+            </b:if>
+          ]
+          
+          [
+            <b:if cond="data:olderPageUrl">
+              [a 'Older posts' expr:href="data:olderPageUrl"]
+            </b:if>
+          ]
+        ]
+        
+        <b:if cond="data:newerPageUrl OR data:olderPageUrl">  
+          [ .void .void-2x]
+          [ .text-center
+            [a 'Home' expr:href="data:blog.homepageUrl"]
+          ]
+        </b:if>
+      
+      ]
+    </b:includable>
+      
+      
+  </b:defaultmarkup>
+  
+</b:defaultmarkups>

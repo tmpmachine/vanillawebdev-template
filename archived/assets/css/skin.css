@@ -1,0 +1,15 @@
+*{
+    box-sizing:border-box;
+}
+.skin-body-default {
+    font-family: sans-serif;
+    line-height: 1.5;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.layout-section-flex-col-gap-2x > .section {
+    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+}

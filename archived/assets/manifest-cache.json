@@ -1,0 +1,24 @@
+{
+    "css": {
+        "path": "/simple-blog-template/assets/css",
+        "files": [
+            "/normalize.min.css",
+            "/style.css",
+            "/skin.css",
+            "/widgets.css"
+        ]
+    },
+    "js": {
+        "path": "/simple-blog-template/assets/js",
+        "files": [
+            "/main-component.js",
+            "/index.js",
+            "/script-loader.js",
+            "/blogsearch.js",
+            "/blogfeeds.js"
+        ]
+    },
+    "core": [
+        "/pwa-cacher.js"
+    ]
+}
